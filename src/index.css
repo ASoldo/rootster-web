@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, html{
+  background-color: #000;
+  scroll-behavior: smooth;
+  line-height: 1.5;
+}
+/*
+ * Nerd Font Setup
+ * */
+.nf{
+  font-family: 'SymbolsOnly'; 
+}
+@font-face {
+  font-family: 'SymbolsOnly';
+  src: url('./assets/fonts/Symbols-1000-em Nerd Font Complete Mono.ttf') format('truetype');
+}
