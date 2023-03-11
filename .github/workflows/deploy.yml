@@ -34,7 +34,7 @@ jobs:
         with:
           host: 3.75.194.12
           username: ubuntu
-          key: ${{ secrets.EC2_INSTANCE_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: dist.zip
           target: ~/dist.zip
         
