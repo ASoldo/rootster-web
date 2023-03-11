@@ -50,7 +50,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo unzip -o ~/dist.zip -d /var/www/rootsterxyz
+            sudo unzip -o ~/dist.zip/dist.zip -d /var/www/rootsterxyz
           
       - name: Restart Caddy v2
         uses: appleboy/ssh-action@master
