@@ -50,6 +50,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            if [ ! -d "/var/www/html/rootsterxyz" ]; then
+              sudo mkdir -p /var/www/html/rootsterxyz
+            fi
             sudo unzip -o ~/dist.zip/dist.zip -d /var/www/html/rootsterxyz
             sudo rm -rf ~/dist.zip
           
