@@ -82,6 +82,15 @@ const openApp = (e: number) => {
       };
       apps.value.push(markRaw(dalle));
       break;
+    case 9:
+      const IsoMap = defineAsyncComponent(() => import("@/components/IsoMap.vue"))
+      const isoMap: Application = {
+        id: ++lastId, name: "iso-map", component: IsoMap, props: {}, navigation: [
+          { label: 'IsoMap', path: '/' },
+        ]
+      };
+      apps.value.push(markRaw(isoMap));
+      break;
   }
 }
 const inspector = (app: Application) => {
