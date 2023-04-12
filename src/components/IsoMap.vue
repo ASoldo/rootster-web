@@ -340,8 +340,6 @@ onMounted(async () => {
 }
 
 canvas {
-  border-radius: 50px;
-  border: 1px dashed lightblue;
   image-rendering: pixelated;
   user-select: none;
   touch-action: none;
