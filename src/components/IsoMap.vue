@@ -1,17 +1,26 @@
-
 <template>
   <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-    <div style="position: relative; width: 1024px; height: 512px;">
-      <canvas ref="canvas" style="position: absolute; width: 100%"></canvas>
+    <div style="position: relative; width: 1024px; height: 700px;">
+      <canvas ref="canvas" style="position: absolute; width: 100%;"></canvas>
+      <canvas ref="level1Canvas" style="position: absolute; width: 100%; z-index: 2"></canvas>
       <canvas ref="effectsCanvas" @mousemove="onMouseMove" @click="onClick"
-        style="position: absolute; width: 100%;"></canvas>
+        style="position: absolute; width: 100%; z-index: 3"></canvas> <!-- zIndex value changed to 3 -->
 
     </div>
   </div>
+  <div class="level-selector">
+    <label for="level" style="color: white;">Select Level:</label>
+    <select id="level" v-model="selectedMode">
+      <option value="level0">Level 0</option>
+      <option value="level1">Level 1</option>
+    </select>
+  </div>
   <div class="assets-list">
-    <button class="asset-button" v-for="(asset, index) in assets" :key="index" @click="changeSelectedAsset(asset)">
-      <img :src="asset" class="asset-image" />
-      <span class="asset-text">Asset {{ index + 1 }}</span>
+
+    <button class="asset-button" v-for="(asset, index) in assets[selectedMode as keyof typeof assets]" :key="index"
+      @click="changeSelectedAsset(asset)">
+      <img :src="asset.asset" class="asset-image" />
+      <span class="asset-text">{{ asset.name }}</span>
     </button>
   </div>
 </template>
@@ -23,15 +32,53 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const effectsCanvas = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
 const effectsCtx = ref<CanvasRenderingContext2D | null>(null);
-let assets = [
-  'https://j-img.game8.co/1652101/d871d2ac249bd68df04e43bfd4b36b42.png/show?1527556487',
-  'https://j-img.game8.co/1652100/af09bf9e33303c806007ab4989d61ca1.png/show?1527556487',
-  'https://j-img.game8.co/1652118/2640777db1eb11b87e95172adc11324d.png/show?1527556488',
-  'https://j-img.game8.co/1863178/20a479afd2a16b4ad008ca4ba408ea87.png/show?1534398556',
-  'https://j-img.game8.co/1862009/386c356ec3f08caedebcff6c5e60ed56.png/show?1534384966',
-  'https://j-img.game8.co/1652340/b90bbcd2a79d87ded1161d482f4bb62c.png/show?1527556504',
-  'https://j-img.game8.co/1652245/c3d88fb25c923f5f25714fa8b98f8972.png/show?1527556498',
-];
+const level1Canvas = ref<HTMLCanvasElement | null>(null);
+const level1Ctx = ref<CanvasRenderingContext2D | null>(null);
+
+const assets = reactive({
+  level0: [
+    {
+      name: 'Grass',
+      asset: 'https://j-img.game8.co/1652101/d871d2ac249bd68df04e43bfd4b36b42.png/show?1527556487',
+    },
+    {
+      name: 'Mycelium',
+      asset: 'https://j-img.game8.co/1652255/4ab847f418523f9d9e1901f982b4ad6c.png/show?1527556498',
+    },
+    {
+      name: 'Red Sand',
+      asset: 'https://j-img.game8.co/1652119/9cbe9bfdfb27361d609bc17475bbf39f.png/show?1527556488',
+    },
+    {
+      name: 'Dirt',
+      asset: 'https://j-img.game8.co/1652102/77128c1c23c5abc722044830c6dfa872.png/show?1527556487',
+    },
+  ],
+  level1: [
+    {
+      name: 'Enchanting Table',
+      asset: 'https://j-img.game8.co/1652260/d5c088e9622cb5cafdf3fb8496054be5.png/show?1527556499',
+    },
+    {
+      name: 'Furnace',
+      asset: 'https://j-img.game8.co/1652199/9f45dd5bb848889d8a1c3a63851c360a.png/show?1527556494',
+    },
+    {
+      name: 'Crafting Table',
+      asset: 'https://j-img.game8.co/1652198/f0210a2b30b8d3ece837484a06027cd2.png/show?1527556494',
+    },
+    {
+      name: 'Beacon',
+      asset: 'https://img.game8.co/3529063/438732cbdf100b718d4d7c70896724c6.png/show',
+    },
+    {
+      name: 'Air',
+      asset: 'https://imgs.search.brave.com/yoe7iXFEBB4Waj0DJHtUjNrame24JzthWH7qLWGzFNg/rs:fit:22:22:1/g:ce/aHR0cHM6Ly9pLnN0/YWNrLmltZ3VyLmNv/bS8wS3ZCOC5wbmc'
+    }
+  ],
+});
+
+
 const state = reactive({
   paddingLeftRight: 0,
   paddingTopBottom: -24,
@@ -42,26 +89,39 @@ const state = reactive({
   offsetXCenter: 0,
   offsetYCenter: 0,
 });
-const changeSelectedAsset = (asset: string) => {
-  selectedAsset.value = asset;
+const selectedMode = ref("level0");
+const selectedAssetName = ref('');
+
+
+const changeSelectedAsset = (asset: { name: string; asset: string }) => {
+  selectedAsset.value = asset.asset;
+  selectedAssetName.value = asset.name;
 };
-const selectedAsset = ref(assets[0]);
+const selectedAsset = ref(assets.level0[0].asset);
+
 const preloadAssets = async () => {
-  const loadedAssets = await Promise.all(assets.map((src) => loadImage(src)));
-  const assetMap = new Map(assets.map((src, i) => [src, loadedAssets[i]]));
+  const allAssets = [...assets.level0, ...assets.level1];
+  const loadedAssets = await Promise.all(allAssets.map((assetObj) => loadImage(assetObj.asset)));
+  const assetMap = new Map(allAssets.map((assetObj, i) => [assetObj.asset, loadedAssets[i]]));
   return assetMap;
 };
 
+
 const assetMap = reactive(new Map());
 
-const createBoard = () => {
+
+const airAsset = assets.level1.find((asset) => asset.name === "Air");
+
+const createBoard = (levelAssets: any[], useAir = false) => {
   const board = [];
   for (let row = 0; row < state.gridHeight; row++) {
     const cellsInRow = row < Math.ceil(state.gridHeight / 2) ? row : state.gridHeight - row;
     const rowData = [];
     for (let col = 0; col < cellsInRow; col++) {
+      const cellAsset = useAir ? airAsset : levelAssets[Math.floor(Math.random() * levelAssets.length)];
       rowData.push({
-        asset: assets[Math.floor(Math.random() * assets.length)],
+        asset: cellAsset.asset,
+        name: cellAsset.name,
       });
     }
     board.push(rowData);
@@ -69,7 +129,8 @@ const createBoard = () => {
   return board;
 };
 
-const board = reactive(createBoard());
+const level0Board = reactive(createBoard(assets.level0));
+const level1Board = reactive(createBoard(assets.level1, true));
 
 const loadImage = async (src: string) => {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -81,21 +142,35 @@ const loadImage = async (src: string) => {
 };
 
 const drawScene = () => {
-  if (!ctx.value) return;
+  if (!ctx.value || !level1Ctx.value) return;
   ctx.value.clearRect(0, 0, canvas.value!.width, canvas.value!.height);
+  level1Ctx.value.clearRect(0, 0, level1Canvas.value!.width, level1Canvas.value!.height);
 
-  for (let row = 0; row < state.gridHeight; row++) {
-    const cellsInRow = row < Math.ceil(state.gridHeight / 2) ? row : state.gridHeight - row;
-    const offsetXForRow = state.imgWidth / 2 * (state.gridHeight - cellsInRow * 2);
+  const boards = [level0Board, level1Board];
 
-    for (let col = 0; col < cellsInRow; col++) {
-      const img = assetMap.get(board[row][col].asset);
+  boards.forEach((board, boardIndex) => {
+    for (let row = 0; row < state.gridHeight; row++) {
+      const cellsInRow = row < Math.ceil(state.gridHeight / 2) ? row : state.gridHeight - row;
+      const offsetXForRow = state.imgWidth / 2 * (state.gridHeight - cellsInRow * 2);
 
-      const x = state.offsetXCenter + offsetXForRow / 2 + col * (state.imgWidth + state.paddingLeftRight * 2) + state.paddingLeftRight;
-      const y = state.offsetYCenter + row * (state.imgHeight + state.paddingTopBottom * 2) + state.paddingTopBottom;
-      ctx.value!.drawImage(img!, x, y, state.imgWidth, state.imgHeight);
+      for (let col = 0; col < cellsInRow; col++) {
+        const cellAsset = board[row][col].asset;
+
+        const img = assetMap.get(cellAsset);
+        const x = state.offsetXCenter + offsetXForRow / 2 + col * (state.imgWidth + state.paddingLeftRight * 2) + state.paddingLeftRight;
+        const y = state.offsetYCenter + row * (state.imgHeight + state.paddingTopBottom * 2) + state.paddingTopBottom;
+
+        // Calculate the updated y-coordinate for Level 1
+        const yOffsetY = boardIndex === 1 ? y + state.imgHeight + state.paddingTopBottom * 2 - 50 : y;
+
+        if (boardIndex === 0) {
+          ctx.value!.drawImage(img!, x, yOffsetY, state.imgWidth, state.imgHeight);
+        } else {
+          level1Ctx.value!.drawImage(img!, x, yOffsetY, state.imgWidth, state.imgHeight);
+        }
+      }
     }
-  }
+  });
 };
 
 const hoveredCell = reactive({ row: -1, col: -1 });
@@ -118,7 +193,6 @@ const pointInHexagon = (px: number, py: number, x: number, y: number, width: num
   return s;
 };
 
-
 const onMouseMove = (event: MouseEvent) => {
   const rect = canvas.value!.getBoundingClientRect();
   const scaleFactorX = canvas.value!.width / rect.width;
@@ -135,7 +209,9 @@ const onMouseMove = (event: MouseEvent) => {
       const cellX = state.offsetXCenter + offsetXForRow / 2 + col * (state.imgWidth + state.paddingLeftRight * 2) + state.paddingLeftRight;
       const cellY = state.offsetYCenter + row * (state.imgHeight + state.paddingTopBottom * 2) + state.paddingTopBottom;
 
-      if (pointInHexagon(x, y, cellX + state.imgWidth / 1.7, cellY + state.imgHeight / 1.7 - 25, state.imgWidth, state.imgHeight, scaleFactorX, scaleFactorY)) {
+      const yOffsetY = selectedMode.value === "level1" ? cellY + state.imgHeight + state.paddingTopBottom * 2 - 50 : cellY;
+
+      if (pointInHexagon(x, y, cellX + state.imgWidth / 1.7, yOffsetY + state.imgHeight / 1.7 - 25, state.imgWidth, state.imgHeight, scaleFactorX, scaleFactorY)) {
         hoveredCell.row = row;
         hoveredCell.col = col;
         found = true;
@@ -158,12 +234,15 @@ const onMouseMove = (event: MouseEvent) => {
 const onClick = (event: MouseEvent) => {
   if (hoveredCell.row >= 0 && hoveredCell.col >= 0) {
     // Update the asset for the clicked cell
-    board[hoveredCell.row][hoveredCell.col].asset = selectedAsset.value;
+    const currentBoard = selectedMode.value === "level0" ? level0Board : level1Board;
+    currentBoard[hoveredCell.row][hoveredCell.col].asset = selectedAsset.value;
+    currentBoard[hoveredCell.row][hoveredCell.col].name = selectedAssetName.value; // Update the asset name
 
     // Redraw the scene
     drawScene();
   }
 };
+
 const drawEffects = () => {
   if (!effectsCtx.value) return;
   effectsCtx.value.clearRect(0, 0, effectsCanvas.value!.width, effectsCanvas.value!.height);
@@ -176,18 +255,41 @@ const drawEffects = () => {
       const x = state.offsetXCenter + offsetXForRow / 2 + col * (state.imgWidth + state.paddingLeftRight * 2) + state.paddingLeftRight;
       const y = state.offsetYCenter + row * (state.imgHeight + state.paddingTopBottom * 2) + state.paddingTopBottom;
 
+      // Calculate the updated y-coordinate for Level 1
+      const yOffsetY = selectedMode.value === "level1" ? y + state.imgHeight + state.paddingTopBottom * 2 - 50 : y;
+
       // Draw the hover effect
       if (hoveredCell.row === row && hoveredCell.col === col) {
         effectsCtx.value.strokeStyle = 'rgba(255, 255, 255, 0.5)';
         effectsCtx.value.beginPath();
-        effectsCtx.value.moveTo(x + state.imgWidth / 2, y);
-        effectsCtx.value.lineTo(x + state.imgWidth, y + state.imgHeight / 4);
-        effectsCtx.value.lineTo(x + state.imgWidth, y + state.imgHeight * 3 / 4);
-        effectsCtx.value.lineTo(x + state.imgWidth / 2, y + state.imgHeight);
-        effectsCtx.value.lineTo(x, y + state.imgHeight * 3 / 4);
-        effectsCtx.value.lineTo(x, y + state.imgHeight / 4);
+        effectsCtx.value.moveTo(x + state.imgWidth / 2, yOffsetY);
+        effectsCtx.value.lineTo(x + state.imgWidth, yOffsetY + state.imgHeight / 4);
+        effectsCtx.value.lineTo(x + state.imgWidth, yOffsetY + state.imgHeight * 3 / 4);
+        effectsCtx.value.lineTo(x + state.imgWidth / 2, yOffsetY + state.imgHeight);
+        effectsCtx.value.lineTo(x, yOffsetY + state.imgHeight * 3 / 4);
+        effectsCtx.value.lineTo(x, yOffsetY + state.imgHeight / 4);
         effectsCtx.value.closePath();
         effectsCtx.value.stroke();
+
+        // Draw the 3D effect lines
+        effectsCtx.value.beginPath();
+        effectsCtx.value.moveTo(x, yOffsetY + state.imgHeight / 4);
+        effectsCtx.value.lineTo(x + state.imgWidth / 2, yOffsetY + state.imgHeight / 2);
+        effectsCtx.value.lineTo(x + state.imgWidth, yOffsetY + state.imgHeight / 4);
+        effectsCtx.value.stroke();
+
+        effectsCtx.value.beginPath();
+        effectsCtx.value.moveTo(x + state.imgWidth / 2, yOffsetY + state.imgHeight / 2);
+        effectsCtx.value.lineTo(x + state.imgWidth / 2, yOffsetY + state.imgHeight);
+        effectsCtx.value.stroke();
+
+        const currentBoard = selectedMode.value === "level0" ? level0Board : level1Board;
+        const hoveredAsset = currentBoard[row][col].asset;
+        const assetName = assets[selectedMode.value as keyof typeof assets].find(asset => asset.asset === hoveredAsset)?.name || 'Unknown';
+
+        // Draw the asset name
+        effectsCtx.value.fillStyle = 'rgba(255, 255, 255, 1)';
+        effectsCtx.value.fillText(assetName, x, yOffsetY);
       }
     }
   }
@@ -198,9 +300,9 @@ onMounted(async () => {
   ctx.value = canvas.value.getContext('2d');
   effectsCtx.value = effectsCanvas.value.getContext('2d');
   canvas.value.width = 1024;
-  canvas.value.height = 512;
+  canvas.value.height = 700;
   effectsCanvas.value.width = 1024;
-  effectsCanvas.value.height = 512;
+  effectsCanvas.value.height = 700;
 
   // Clear the assetMap and preload images
   assetMap.clear();
@@ -209,7 +311,13 @@ onMounted(async () => {
     assetMap.set(key, value);
   });
 
-  const img = assetMap.get(assets[0]);
+  if (!level1Canvas.value) return;
+  level1Ctx.value = level1Canvas.value.getContext('2d');
+  level1Canvas.value.width = 1024;
+  level1Canvas.value.height = 700;
+
+  const img = assetMap.get(assets.level0[0].asset);
+
   state.imgWidth = 64 - state.paddingLeftRight * 2;
   state.imgHeight = (img!.height / img!.width) * state.imgWidth;
 
@@ -225,6 +333,12 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.level-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 canvas {
   border-radius: 50px;
   border: 1px dashed lightblue;
