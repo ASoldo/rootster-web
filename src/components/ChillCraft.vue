@@ -8,8 +8,9 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import squareOutlineTextured from '@/assets/square-outline-textured.png';
-
+import gold from '@/assets/chillcraft-assets/gold.png';
+// import grass_side from '@/assets/chillcraft-assets/grass_side.png';
+// import square from '@/assets/chillcraft-assets/square-outline-textured.png'
 
 const canvas = ref<HTMLCanvasElement | undefined>(undefined);
 let renderer: THREE.WebGLRenderer;
@@ -46,19 +47,17 @@ onUnmounted(() => {
   document.removeEventListener('keyup', onDocumentKeyUp);
 });
 
-
-
 const init = () => {
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-  camera.position.set(500, 800, 1300);
+  camera.position.set(1300, 800, 1300);
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0f0f0);
+  // scene.background = new THREE.Color(0xf0f0f0);
 
   // roll-over helpers
   const rollOverGeo = new THREE.BoxGeometry(50, 50, 50);
-  rollOverMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true });
+  rollOverMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.4, transparent: true });
   rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
   scene.add(rollOverMesh);
 
@@ -66,7 +65,7 @@ const init = () => {
   cubeGeo = new THREE.BoxGeometry(50, 50, 50);
   cubeMaterial = new THREE.MeshLambertMaterial
 
-  cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00, map: new THREE.TextureLoader().load(squareOutlineTextured) });
+  cubeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, map: new THREE.TextureLoader().load(gold) });
 
   // grid
   const gridHelper = new THREE.GridHelper(1000, 20);
@@ -123,9 +122,6 @@ const onWindowResize = () => {
   updateRendererSize();
 };
 
-
-
-
 const onPointerMove = (event: MouseEvent) => {
   const rect = renderer.domElement.getBoundingClientRect();
   pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
@@ -146,10 +142,10 @@ const onPointerMove = (event: MouseEvent) => {
   }
 };
 
-
-
-
 const onPointerDown = (event: MouseEvent) => {
+  // check if pointer is dragging and stop
+
+  if (event.buttons !== 1) return;
   const rect = renderer.domElement.getBoundingClientRect();
   pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
 
@@ -183,7 +179,6 @@ const onPointerDown = (event: MouseEvent) => {
   }
 };
 
-
 const onDocumentKeyDown = (event: KeyboardEvent) => {
   switch (event.keyCode) {
     case 16:
@@ -191,8 +186,6 @@ const onDocumentKeyDown = (event: KeyboardEvent) => {
       break;
   }
 };
-
-
 
 const onDocumentKeyUp = (event: KeyboardEvent) => {
   switch (event.keyCode) {
@@ -202,16 +195,12 @@ const onDocumentKeyUp = (event: KeyboardEvent) => {
   }
 };
 
-
-
-
 const render = () => {
   if (controls) {
     controls.update();
   }
   renderer.render(scene, camera);
 };
-
 
 const animate = () => {
   requestAnimationFrame(animate);
