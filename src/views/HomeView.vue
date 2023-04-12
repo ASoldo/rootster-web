@@ -91,6 +91,16 @@ const openApp = (e: number) => {
       };
       apps.value.push(markRaw(isoMap));
       break;
+
+    case 10:
+      const ChillCraft = defineAsyncComponent(() => import("@/components/ChillCraft.vue"))
+      const chillCraft: Application = {
+        id: ++lastId, name: "chill-craft", component: ChillCraft, props: {}, navigation: [
+          { label: 'ChillCraft', path: '/' },
+        ]
+      };
+      apps.value.push(markRaw(chillCraft));
+      break;
   }
 }
 const inspector = (app: Application) => {

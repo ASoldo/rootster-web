@@ -41,6 +41,12 @@
                 IsoMap
               </a>
             </li>
+            <li class="hover:bg-primary">
+              <a @click.prevent="gotolink('openApp', 10)" class="p-1">
+                <span class="nf">󰔥</span>
+                ChillCraft
+              </a>
+            </li>
           </ul>
         </PowerBox>
       </li>
