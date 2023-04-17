@@ -1,10 +1,12 @@
 <template>
   <div style="width: 100%; position: relative;">
-    <select v-model="selectedGroup" @change="updateSatelliteData" style="position: absolute; z-index: 10;">
-      <option v-for="group in satelliteGroups" :value="group.url" :key="group.name">
-        {{ group.name }}
-      </option>
-    </select>
+    <div style=" display: flex; justify-content: center; align-items: center;">
+      <select v-model="selectedGroup" @change="updateSatelliteData" style="position: absolute; z-index: 10;">
+        <option v-for="group in satelliteGroups" :value="group.url" :key="group.name">
+          {{ group.name }}
+        </option>
+      </select>
+    </div>
     <canvas style="width: 100%; position: relative;" ref="canvas"></canvas>
     <div v-if="isLoading" class="loading-bar"
       style="position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
@@ -29,6 +31,13 @@ const scaleFactor = 1 / 1000;
 const mounted = ref(false);
 const isLoading = ref(false);
 let labelRenderer: CSS2DRenderer;
+const atmosphereLayers = [
+  { name: 'Troposphere', altitude: 12000, color: 0x7DB9DE },
+  { name: 'Stratosphere', altitude: 50000, color: 0x4D5D53 },
+  { name: 'Mesosphere', altitude: 85000, color: 0x0B3D91 },
+  { name: 'Thermosphere', altitude: 690000, color: 0x0B3D61 },
+];
+
 
 const satelliteGroups = [
   { name: 'Active', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json' },
@@ -48,6 +57,48 @@ async function fetchSatelliteData(url: any) {
   const data = await response.json();
   return data;
 }
+
+function addAtmosphereLayers() {
+  const earthRadius = 6371 * scaleFactor;
+
+  for (const layer of atmosphereLayers) {
+    const radius = earthRadius + layer.altitude * scaleFactor;
+
+    const material = new THREE.LineBasicMaterial({ color: layer.color });
+
+    const circlePoints = [];
+    const segmentCount = 128;
+    const angleStep = (2 * Math.PI) / segmentCount;
+
+    // XY plane circle
+    for (let i = 0; i <= segmentCount; i++) {
+      circlePoints.push(new THREE.Vector3(radius * Math.cos(i * angleStep), radius * Math.sin(i * angleStep), 0));
+    }
+
+    // const geometryXY = new THREE.BufferGeometry().setFromPoints(circlePoints);
+    // const circleXY = new THREE.Line(geometryXY, material);
+    // scene.add(circleXY);
+
+    // XZ plane circle
+    for (let i = 0; i <= segmentCount; i++) {
+      circlePoints[i].set(radius * Math.cos(i * angleStep), 0, radius * Math.sin(i * angleStep));
+    }
+
+    const geometryXZ = new THREE.BufferGeometry().setFromPoints(circlePoints);
+    const circleXZ = new THREE.Line(geometryXZ, material);
+    scene.add(circleXZ);
+
+    // YZ plane circle
+    // for (let i = 0; i <= segmentCount; i++) {
+    //   circlePoints[i].set(0, radius * Math.cos(i * angleStep), radius * Math.sin(i * angleStep));
+    // }
+
+    // const geometryYZ = new THREE.BufferGeometry().setFromPoints(circlePoints);
+    // const circleYZ = new THREE.Line(geometryYZ, material);
+    // scene.add(circleYZ);
+  }
+}
+
 
 function updateSatelliteData() {
   loadSatelliteData(selectedGroup.value);
@@ -111,7 +162,7 @@ function satellitePosition(satellite: any) {
 function init() {
   // Set up the scene, camera, and renderer
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 8000);
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value! });
   updateRendererSize();
 
@@ -120,14 +171,19 @@ function init() {
 
   // Create Earth model
   const earthRadius = 6371 * scaleFactor;
+  const earthPolarRadius = 6356.8 * scaleFactor; // Earth's polar radius
   const earthGeometry = new THREE.SphereGeometry(earthRadius, 32, 32);
   const earthTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/0/04/Solarsystemscope_texture_8k_earth_daymap.jpg');
-  // const earthTexture = new THREE.TextureLoader().load('https://upload.wikimedia.org/wikipedia/commons/b/b3/Solarsystemscope_texture_8k_earth_nightmap.jpg');
   const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
   const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-  scene.add(earthMesh);
 
-  renderer = new THREE.WebGLRenderer({ antialias: false, canvas: canvas.value!, alpha: true });
+  // Scale Y-axis to create an oval shape
+  earthMesh.scale.y = earthPolarRadius / earthRadius;
+  // earthMesh.rotation.x = THREE.MathUtils.degToRad(23.5);
+  scene.add(earthMesh);
+  addAtmosphereLayers();
+
+  renderer = new THREE.WebGLRenderer({ antialias: false, canvas: canvas.value!, alpha: false });
   renderer.setPixelRatio(window.devicePixelRatio);
 
   camera.position.z = 6 * 6371 * scaleFactor;
@@ -206,6 +262,7 @@ onUnmounted(() => {
 <style>
 canvas {
   width: 100%;
+  border-radius: 15px;
 }
 
 .loading-bar {
