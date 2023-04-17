@@ -19,10 +19,11 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
 
 // Set up the Three.js scene, camera, renderer, and controls
 const canvas = ref<HTMLCanvasElement | null>(null);
-let scene: THREE.Scene;
-let camera: THREE.PerspectiveCamera;
-let renderer: THREE.WebGLRenderer;
-let controls: OrbitControls;
+let scene: THREE.Scene | null;
+let camera: THREE.PerspectiveCamera | null;
+let renderer: THREE.WebGLRenderer | null;
+let controls: OrbitControls | null;
+
 
 const scaleFactor = 1 / 1000;
 const mounted = ref(false);
@@ -57,9 +58,9 @@ async function loadSatelliteData(url: String) {
   const data = await fetchSatelliteData(url);
 
   // Clear existing satellites from the scene
-  for (const object of scene.children) {
+  for (const object of scene?.children ?? []) {
     if (object.userData.type === 'satellite') {
-      scene.remove(object);
+      scene?.remove(object);
     }
   }
 
@@ -68,13 +69,13 @@ async function loadSatelliteData(url: String) {
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.userData.type = 'satellite'; // Mark this object as a satellite
-    scene.add(mesh);
+    scene?.add(mesh);
     // Set the mesh position according to satellite data
     mesh.position.copy(satellitePosition(satellite));
 
     // Add satellite orbit
     const orbit = createOrbit(satellite);
-    scene.add(orbit);
+    scene?.add(orbit);
   }
   isLoading.value = false;
 }
@@ -111,11 +112,11 @@ function init() {
   // Set up the scene, camera, and renderer
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  renderer = new THREE.WebGLRenderer({ canvas: canvas.value });
+  renderer = new THREE.WebGLRenderer({ canvas: canvas.value! });
   updateRendererSize();
 
   // Set up the OrbitControls
-  controls = new OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera!, renderer.domElement);
 
   // Create Earth model
   const earthRadius = 6371 * scaleFactor;
@@ -126,13 +127,13 @@ function init() {
   const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
   scene.add(earthMesh);
 
-  renderer = new THREE.WebGLRenderer({ antialias: false, canvas: canvas.value, alpha: true });
+  renderer = new THREE.WebGLRenderer({ antialias: false, canvas: canvas.value!, alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
 
   camera.position.z = 6 * 6371 * scaleFactor;
   labelRenderer = new CSS2DRenderer();
   labelRenderer.setSize(window.innerWidth, window.innerHeight);
-  labelRenderer.domElement.style.position = 'absolute';
+  labelRenderer!.domElement.style.position = 'absolute';
   labelRenderer.domElement.style.top = '0px';
   document.body.appendChild(labelRenderer.domElement);
 }
@@ -151,8 +152,8 @@ function createOrbit(satellite: any) {
 }
 
 function cleanUp() {
-  controls.dispose();
-  renderer.dispose();
+  controls?.dispose();
+  renderer?.dispose();
   camera = null;
   scene = null;
   controls = null;
@@ -163,9 +164,9 @@ function cleanUp() {
 function animate() {
   if (mounted.value) {
     requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
-    labelRenderer.render(scene, camera);
+    controls?.update();
+    renderer?.render(scene!, camera!);
+    labelRenderer.render(scene!, camera!);
   }
 }
 const updateRendererSize = () => {
@@ -177,10 +178,10 @@ const updateRendererSize = () => {
   const width = parent.clientWidth;
   const height = parent.clientHeight;
 
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
+  camera!.aspect = width / height;
+  camera!.updateProjectionMatrix();
 
-  renderer.setSize(width, height);
+  renderer!.setSize(width, height);
 };
 
 // Handle component lifecycle
@@ -189,7 +190,7 @@ onMounted(() => {
   init();
   animate();
   updateSatelliteData(); // Load satellite data initially
-  labelRenderer.render(scene, camera);
+  labelRenderer.render(scene!, camera!);
   window.addEventListener('resize', updateRendererSize);
 });
 
