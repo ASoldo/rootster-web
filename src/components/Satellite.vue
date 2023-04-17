@@ -27,7 +27,7 @@ let renderer: THREE.WebGLRenderer | null;
 let controls: OrbitControls | null;
 
 
-const scaleFactor = 1 / 100;
+const scaleFactor = 1 / 1000;
 const mounted = ref(false);
 const isLoading = ref(false);
 let labelRenderer: CSS2DRenderer;
@@ -148,7 +148,7 @@ function satellitePosition(satellite: any) {
 function init() {
   // Set up the scene, camera, and renderer
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 8000);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 16000);
   renderer = new THREE.WebGLRenderer({ canvas: canvas.value! });
   updateRendererSize();
 
