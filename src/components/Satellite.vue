@@ -140,16 +140,18 @@ function init() {
 
 function createOrbit(satellite: any) {
   const points = [];
-  for (let angle = 0; angle < 360; angle += 5) {
+  for (let angle = 0; angle <= 360; angle += 5) {
     const pos = satellitePosition({ ...satellite, MEAN_ANOMALY: angle });
     points.push(pos);
   }
+  points.push(points[0]); // Add the first point to the end, closing the loop
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
   const material = new THREE.LineBasicMaterial({ color: 0x03fcfc, transparent: true, opacity: 0.1 });
   const orbit = new THREE.Line(geometry, material);
   orbit.userData.type = 'satellite';
   return orbit;
 }
+
 
 function cleanUp() {
   controls?.dispose();
