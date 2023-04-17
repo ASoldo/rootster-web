@@ -31,14 +31,14 @@ const isLoading = ref(false);
 let labelRenderer: CSS2DRenderer;
 
 const satelliteGroups = [
-  { name: 'Active', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json' },
-  { name: 'Last 30 days', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json' },
-  { name: 'Space Stations', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=json' },
-  { name: 'Russian ASAT Test', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=1982-092&FORMAT=json' },
-  { name: 'Chinese ASAT Test', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=1999-025&FORMAT=json' },
-  { name: 'IRIDIUM 33 Debris', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-33-debris&FORMAT=json' },
-  { name: 'COSMOS 2251 Debris', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-2251-debris&FORMAT=json' },
-  { name: '100 brightest', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=visual&FORMAT=json' },
+  { name: 'Active', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json' },
+  { name: 'Last 30 days', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json' },
+  { name: 'Space Stations', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=json' },
+  { name: 'Russian ASAT Test', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=1982-092&FORMAT=json' },
+  { name: 'Chinese ASAT Test', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=1999-025&FORMAT=json' },
+  { name: 'IRIDIUM 33 Debris', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-33-debris&FORMAT=json' },
+  { name: 'COSMOS 2251 Debris', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-2251-debris&FORMAT=json' },
+  { name: '100 brightest', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=visual&FORMAT=json' },
 ];
 const selectedGroup = ref(satelliteGroups[0].url);
 
