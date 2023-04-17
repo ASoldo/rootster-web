@@ -27,7 +27,7 @@ let renderer: THREE.WebGLRenderer | null;
 let controls: OrbitControls | null;
 
 
-const scaleFactor = 1 / 1000;
+const scaleFactor = 1 / 100;
 const mounted = ref(false);
 const isLoading = ref(false);
 let labelRenderer: CSS2DRenderer;
