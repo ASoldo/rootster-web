@@ -8,9 +8,6 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import gold from '@/assets/chillcraft-assets/gold.png';
-// import grass_side from '@/assets/chillcraft-assets/grass_side.png';
-// import square from '@/assets/chillcraft-assets/square-outline-textured.png'
 
 const canvas = ref<HTMLCanvasElement | undefined>(undefined);
 let renderer: THREE.WebGLRenderer;
@@ -26,6 +23,11 @@ let cubeGeo: THREE.BoxGeometry;
 let cubeMaterial: THREE.MeshLambertMaterial;
 const objects: THREE.Object3D[] = [];
 let controls: OrbitControls;
+
+const grassBlock = {
+  name: 'Grass Block',
+  texture: 'https://i.redd.it/e3854vrewq551.jpg',
+};
 
 onMounted(() => {
   if (!canvas.value) return;
@@ -53,7 +55,6 @@ const init = () => {
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
-  // scene.background = new THREE.Color(0xf0f0f0);
 
   // roll-over helpers
   const rollOverGeo = new THREE.BoxGeometry(50, 50, 50);
@@ -63,9 +64,11 @@ const init = () => {
 
   // cubes
   cubeGeo = new THREE.BoxGeometry(50, 50, 50);
-  cubeMaterial = new THREE.MeshLambertMaterial
 
-  cubeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, map: new THREE.TextureLoader().load(gold) });
+  const textureLoader = new THREE.TextureLoader();
+  const grassBlockTexture = textureLoader.load(grassBlock.texture);
+
+  cubeMaterial = new THREE.MeshLambertMaterial({ map: grassBlockTexture });
 
   // grid
   const gridHelper = new THREE.GridHelper(1000, 20);
@@ -132,7 +135,6 @@ const onPointerMove = (event: MouseEvent) => {
 
   if (intersects.length > 0) {
     const intersect = intersects[0];
-
     if (intersect.face) {
       rollOverMesh.position.copy(intersect.point).add(intersect.face.normal);
       rollOverMesh.position.divideScalar(50).floor().multiplyScalar(50).addScalar(25);
@@ -144,7 +146,6 @@ const onPointerMove = (event: MouseEvent) => {
 
 const onPointerDown = (event: MouseEvent) => {
   // check if pointer is dragging and stop
-
   if (event.buttons !== 1) return;
   const rect = renderer.domElement.getBoundingClientRect();
   pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
@@ -208,6 +209,4 @@ const animate = () => {
 };
 </script>
 
-<style>
-/* Your existing styles */
-</style>
+<style></style>

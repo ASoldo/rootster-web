@@ -47,6 +47,12 @@
                 ChillCraft
               </a>
             </li>
+            <li class="hover:bg-primary">
+              <a @click.prevent="gotolink('openApp', 11)" class="p-1">
+                <span class="nf">󰑱</span>
+                Satellite
+              </a>
+            </li>
           </ul>
         </PowerBox>
       </li>

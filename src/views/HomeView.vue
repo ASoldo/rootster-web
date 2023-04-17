@@ -101,6 +101,15 @@ const openApp = (e: number) => {
       };
       apps.value.push(markRaw(chillCraft));
       break;
+    case 11:
+      const Satelite = defineAsyncComponent(() => import("@/components/Satellite.vue"))
+      const satelite: Application = {
+        id: ++lastId, name: "satellite", component: Satelite, props: {}, navigation: [
+          { label: 'Satellite', path: '/' },
+        ]
+      };
+      apps.value.push(markRaw(satelite));
+      break;
   }
 }
 const inspector = (app: Application) => {
