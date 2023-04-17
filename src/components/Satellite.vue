@@ -17,7 +17,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 
 // Set up the Three.js scene, camera, renderer, and controls
 const canvas = ref<HTMLCanvasElement | null>(null);
@@ -75,27 +75,13 @@ function addAtmosphereLayers() {
       circlePoints.push(new THREE.Vector3(radius * Math.cos(i * angleStep), radius * Math.sin(i * angleStep), 0));
     }
 
-    // const geometryXY = new THREE.BufferGeometry().setFromPoints(circlePoints);
-    // const circleXY = new THREE.Line(geometryXY, material);
-    // scene.add(circleXY);
-
-    // XZ plane circle
     for (let i = 0; i <= segmentCount; i++) {
       circlePoints[i].set(radius * Math.cos(i * angleStep), 0, radius * Math.sin(i * angleStep));
     }
 
     const geometryXZ = new THREE.BufferGeometry().setFromPoints(circlePoints);
     const circleXZ = new THREE.Line(geometryXZ, material);
-    scene.add(circleXZ);
-
-    // YZ plane circle
-    // for (let i = 0; i <= segmentCount; i++) {
-    //   circlePoints[i].set(0, radius * Math.cos(i * angleStep), radius * Math.sin(i * angleStep));
-    // }
-
-    // const geometryYZ = new THREE.BufferGeometry().setFromPoints(circlePoints);
-    // const circleYZ = new THREE.Line(geometryYZ, material);
-    // scene.add(circleYZ);
+    scene?.add(circleXZ);
   }
 }
 
@@ -294,5 +280,14 @@ canvas {
   100% {
     transform: translateX(0%);
   }
+}
+
+.label {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 </style>
