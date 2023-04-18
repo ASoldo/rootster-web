@@ -52,13 +52,13 @@ const satelliteGroups = [
 const selectedGroup = ref(satelliteGroups[0].url);
 
 // Fetch satellite data from the given URL
-async function fetchSatelliteData(url: any) {
+const fetchSatelliteData = async (url: any) => {
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
-function addAtmosphereLayers() {
+const addAtmosphereLayers = () => {
   const earthRadius = 6371 * scaleFactor;
 
   for (const layer of atmosphereLayers) {
@@ -86,11 +86,11 @@ function addAtmosphereLayers() {
 }
 
 
-function updateSatelliteData() {
+const updateSatelliteData = () => {
   loadSatelliteData(selectedGroup.value);
 }
 
-async function loadSatelliteData(url: String) {
+const loadSatelliteData = async (url: String) => {
   isLoading.value = true;
   const data = await fetchSatelliteData(url);
 
@@ -117,7 +117,7 @@ async function loadSatelliteData(url: String) {
   isLoading.value = false;
 }
 
-function satellitePosition(satellite: any) {
+const satellitePosition = (satellite: any) => {
   const earthRadius = 6371 * scaleFactor;
   const semiMajorAxis = Math.pow(6.67430e-11 * 5.97219e24 / (4 * Math.PI ** 2 * satellite.MEAN_MOTION ** 2), 1 / 3) / 1000;
   const eccentricity = satellite.ECCENTRICITY;
@@ -145,7 +145,7 @@ function satellitePosition(satellite: any) {
 }
 
 // Initialize the 3D visualization
-function init() {
+const init = () => {
   // Set up the scene, camera, and renderer
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 16000);
@@ -180,7 +180,7 @@ function init() {
   document.body.appendChild(labelRenderer.domElement);
 }
 
-function createOrbit(satellite: any) {
+const createOrbit = (satellite: any) => {
   const points = [];
   for (let angle = 0; angle <= 360; angle += 5) {
     const pos = satellitePosition({ ...satellite, MEAN_ANOMALY: angle });
@@ -195,7 +195,7 @@ function createOrbit(satellite: any) {
 }
 
 
-function cleanUp() {
+const cleanUp = () => {
   controls?.dispose();
   renderer?.dispose();
   camera = null;
@@ -205,7 +205,7 @@ function cleanUp() {
 }
 
 // Animate the 3D visualization
-function animate() {
+const animate = () => {
   if (mounted.value) {
     requestAnimationFrame(animate);
     controls?.update();
