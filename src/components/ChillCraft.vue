@@ -24,8 +24,8 @@ let cubeMaterial: THREE.MeshLambertMaterial;
 const objects: THREE.Object3D[] = [];
 let controls: OrbitControls;
 
-const grassBlock = {
-  name: 'Grass Block',
+const customBlock = {
+  name: 'Custom Block',
   texture: 'https://lh3.googleusercontent.com/iqlWY7XMz8zrcXeIUYrcXCbNtxL3TzXgWUwrusLJyMwirLq0Gku4Af8YmhJZu9y8S6bx3Fj-4ey1pkFE2BQA2n4=s400',
 };
 
@@ -66,7 +66,7 @@ const init = () => {
   cubeGeo = new THREE.BoxGeometry(50, 50, 50);
 
   const textureLoader = new THREE.TextureLoader();
-  const grassBlockTexture = textureLoader.load(grassBlock.texture);
+  const grassBlockTexture = textureLoader.load(customBlock.texture);
 
   cubeMaterial = new THREE.MeshLambertMaterial({ map: grassBlockTexture });
 
