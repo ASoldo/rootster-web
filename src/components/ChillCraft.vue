@@ -26,7 +26,7 @@ let controls: OrbitControls;
 
 const grassBlock = {
   name: 'Grass Block',
-  texture: 'https://i.redd.it/e3854vrewq551.jpg',
+  texture: 'https://lh3.googleusercontent.com/iqlWY7XMz8zrcXeIUYrcXCbNtxL3TzXgWUwrusLJyMwirLq0Gku4Af8YmhJZu9y8S6bx3Fj-4ey1pkFE2BQA2n4=s400',
 };
 
 onMounted(() => {
