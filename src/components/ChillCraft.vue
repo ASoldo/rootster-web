@@ -181,16 +181,16 @@ const onPointerDown = (event: MouseEvent) => {
 };
 
 const onDocumentKeyDown = (event: KeyboardEvent) => {
-  switch (event.keyCode) {
-    case 16:
+  switch (event.key) {
+    case 'Shift':
       isShiftDown.value = true;
       break;
   }
 };
 
 const onDocumentKeyUp = (event: KeyboardEvent) => {
-  switch (event.keyCode) {
-    case 16:
+  switch (event.key) {
+    case 'Shift':
       isShiftDown.value = false;
       break;
   }
