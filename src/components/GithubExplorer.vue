@@ -135,7 +135,7 @@ const readMe = async () => {
     const repoData = await repoResponse.json();
     const readmeResponse = await fetch(readmeUrl);
     const readmeData = await readmeResponse.json();
-    const readmeContentValue = atob(readmeData.content);
+    const readmeContentValue = window.atob(readmeData.content);
     readmeContent.value = md.render(readmeContentValue);
   } catch (error) {
     console.error(error);
