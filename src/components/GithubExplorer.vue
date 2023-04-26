@@ -36,9 +36,6 @@
       </a>
       <a v-if="item.type !== 'dir'" :href="item.url" target="_blank" rel="noopener noreferrer" class="nf"></a>
     </li>
-
-    <div>
-    </div>
   </ul>
   <div class="card bg-gray-700 my-4" style="width: 100%;">
     <div class="card-body bg-gray-700 rounded-2xl">
@@ -53,6 +50,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
 import MarkdownIt from 'markdown-it';
