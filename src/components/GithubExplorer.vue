@@ -40,13 +40,18 @@
     <div>
     </div>
   </ul>
-  <!-- <div class="card bg-gray-700 " style="width: 100%;"> -->
-  <!--   <div class="card-body bg-gray-700"> -->
-  <!--     <div v-if="isLoading">Loading...</div> -->
-  <!--     <div v-else v-html="readmeContent" class="text-red" -->
-  <!--       style="color: red; font-size: 12px; text-align: left; overflow-wrap: break-word;"></div> -->
-  <!--   </div> -->
-  <!-- </div> -->
+  <div class="card bg-gray-700 my-4" style="width: 100%;">
+    <div class="card-body bg-gray-700 rounded-2xl">
+      <div class="card-title ">
+        <span class="text-teal-500"> >man </span>
+        <span class="text-white">
+          {{ selectedProject }}
+        </span>
+      </div>
+      <div v-if="isLoading">Loading...</div>
+      <div v-else v-html="readmeContent" class="markdown"></div>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, watch } from 'vue';
@@ -85,7 +90,8 @@ const readmeContent = ref<string>('');
 const md = new MarkdownIt({
   html: true,
   linkify: true,
-  typographer: true
+  typographer: true,
+  breaks: true,
 });
 const projectNames = ['go-chi-blog-api', 'digital-arena-web'];
 const selectedProject = ref(projectNames[0]);
@@ -151,4 +157,93 @@ watch(selectedProject, (newVal) => {
 fetchItems();
 readMe();
 </script>
-<style scoped></style>
+
+<style scoped>
+.markdown {
+  word-wrap: break-word;
+}
+
+.markdown ::v-deep a {
+  color: turquoise;
+}
+
+.markdown ::v-deep li,
+.markdown ::v-deep h1,
+.markdown ::v-deep h2,
+.markdown ::v-deep h3,
+.markdown ::v-deep h4,
+.markdown ::v-deep h5,
+.markdown ::v-deep h6 {
+  color: #fff;
+}
+
+.markdown ::v-deep h1 {
+  font-size: 2rem;
+}
+
+.markdown ::v-deep h2 {
+  font-size: 1.75rem;
+}
+
+.markdown ::v-deep h3 {
+  font-size: 1.5rem;
+}
+
+.markdown ::v-deep h4 {
+  font-size: 1.25rem;
+}
+
+.markdown ::v-deep h5 {
+  font-size: 1rem;
+}
+
+.markdown ::v-deep h6 {
+  font-size: 0.875rem;
+}
+
+.markdown ::v-deep p {
+  margin: 1em 0;
+  color: #fff;
+}
+
+.markdown ::v-deep img {
+  max-width: 100%;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.markdown ::v-deep pre {
+  background-color: #f6f8fa;
+  padding: 1em;
+  overflow-x: auto;
+  color: white;
+  background-color: black;
+  border-radius: 15px;
+}
+
+.markdown ::v-deep code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #36D399;
+  background-color: black;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.markdown blockquote {
+  margin-left: 2em;
+  color: #6a737d;
+}
+
+.markdown ::v-deep th {
+  padding: 5px;
+  color: white;
+  outline: 1px solid white;
+}
+
+.markdown ::v-deep td {
+  padding: 5px;
+  color: white;
+  outline: 1px solid white;
+}
+</style>
+
