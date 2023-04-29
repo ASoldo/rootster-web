@@ -26,8 +26,8 @@
   <code class="p-0 m-0">
   soldo.andrej<span class="text-white">@</span>gmail.com
   ---------------------- 
-  OS: <span class="text-white">Arch Linux x86_64</span> 
-  Host: <span class="text-white">B560M DS3H V2</span> 
+  OS:<span class="text-white">Arch Linux x86_64</span> 
+  Host:<span class="text-white">B560M DS3H V2</span> 
   Kernel:<span class="text-white">6.2.13-arch1-1</span> 
   Uptime:<span class="text-white">0 days, 1 mins</span> 
   Packages:<span class="text-white">733 (pacman)</span> 
