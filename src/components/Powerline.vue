@@ -6,21 +6,15 @@
           p_text="Arch">
           <ul tabindex="0" class="dropdown-content menu w-56 glass">
             <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 2)" class="p-1">
-                <span class="nf"></span>
-                Github Explorer
-              </a>
-            </li>
-            <li class="hover:bg-primary">
               <a @click.prevent="gotolink('openApp', 3)" class="p-1">
                 <span class="nf"></span>
                 Neofetch
               </a>
             </li>
             <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 5)" class="p-1">
-                <span class="nf"></span>
-                Spline
+              <a @click.prevent="gotolink('openApp', 2)" class="p-1">
+                <span class="nf"></span>
+                Github Explorer
               </a>
             </li>
             <li class="hover:bg-primary">
@@ -33,6 +27,12 @@
               <a @click.prevent="gotolink('openApp', 8)" class="p-1">
                 <span class="nf">󰔥</span>
                 Dall-E
+              </a>
+            </li>
+            <li class="hover:bg-primary">
+              <a @click.prevent="gotolink('openApp', 5)" class="p-1">
+                <span class="nf"></span>
+                Spline
               </a>
             </li>
             <li class="hover:bg-primary">
