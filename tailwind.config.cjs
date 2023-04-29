@@ -9,7 +9,11 @@ module.exports = {
     extend: {
       colors: {
 
-      }
+      },
+      backgroundColor: {
+        'black-80': 'rgba(0, 0, 0, 0.8)',
+        'primary': '#36d399',
+      },
     },
   },
   plugins: [require("daisyui")],

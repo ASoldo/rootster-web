@@ -4,7 +4,7 @@
       <li class="">
         <PowerBox p_box_color="whitesmoke" p_start_box_color="transparent" p_end_box_color="dodgerblue" p_icon="󰣇"
           p_text="Arch">
-          <ul tabindex="0" class="dropdown-content menu w-56 glass">
+          <ul tabindex="0" class="dropdown-content menu w-56 bg-black-80">
             <li class="hover:bg-primary">
               <a @click.prevent="gotolink('openApp', 3)" class="p-1">
                 <span class="nf"></span>
