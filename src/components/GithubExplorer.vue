@@ -124,13 +124,8 @@ const getParentPath = () => {
   return pathSegments.join('/');
 }
 const readMe = async () => {
-
-  const repoUrl = `https://api.github.com/repos/${props.username}/${selectedProject.value}`;
   const readmeUrl = `https://api.github.com/repos/${props.username}/${selectedProject.value}/contents/README.md`;
-
   try {
-    const repoResponse = await fetch(repoUrl);
-    const repoData = await repoResponse.json();
     const readmeResponse = await fetch(readmeUrl);
     const readmeData = await readmeResponse.json();
     const readmeContentValue = window.atob(readmeData.content);
@@ -144,7 +139,8 @@ const readMe = async () => {
 
 onMounted(async () => {
 });
-watch(selectedProject, (newVal) => {
+
+watch(selectedProject, () => {
   path.value = '';
   readmeContent.value = '';
   isLoading.value = true;
@@ -161,56 +157,56 @@ readMe();
   word-wrap: break-word;
 }
 
-.markdown ::v-deep a {
+.markdown :deep(a) {
   color: turquoise;
 }
 
-.markdown ::v-deep li,
-.markdown ::v-deep h1,
-.markdown ::v-deep h2,
-.markdown ::v-deep h3,
-.markdown ::v-deep h4,
-.markdown ::v-deep h5,
-.markdown ::v-deep h6 {
+.markdown :deep(li),
+.markdown :deep(h1),
+.markdown :deep(h2),
+.markdown :deep(h3),
+.markdown :deep(h4),
+.markdown :deep(h5),
+.markdown :deep(h6) {
   color: #fff;
 }
 
-.markdown ::v-deep h1 {
+.markdown :deep(h1) {
   font-size: 2rem;
 }
 
-.markdown ::v-deep h2 {
+.markdown :deep(h2) {
   font-size: 1.75rem;
 }
 
-.markdown ::v-deep h3 {
+.markdown :deep(h3) {
   font-size: 1.5rem;
 }
 
-.markdown ::v-deep h4 {
+.markdown :deep(h4) {
   font-size: 1.25rem;
 }
 
-.markdown ::v-deep h5 {
+.markdown :deep(h5) {
   font-size: 1rem;
 }
 
-.markdown ::v-deep h6 {
+.markdown :deep(h6) {
   font-size: 0.875rem;
 }
 
-.markdown ::v-deep p {
+.markdown :deep(p) {
   margin: 1em 0;
   color: #fff;
 }
 
-.markdown ::v-deep img {
+.markdown :deep(img) {
   max-width: 100%;
   display: inline-block;
   margin: 0 auto;
 }
 
-.markdown ::v-deep pre {
+.markdown :deep(pre) {
   background-color: #f6f8fa;
   padding: 1em;
   overflow-x: auto;
@@ -219,7 +215,7 @@ readMe();
   border-radius: 15px;
 }
 
-.markdown ::v-deep code {
+.markdown :deep(code) {
   font-family: 'Consolas', 'Courier New', monospace;
   color: #36D399;
   background-color: black;
@@ -227,18 +223,18 @@ readMe();
   padding: 2px;
 }
 
-.markdown blockquote {
+.markdown :deep(blockquote) {
   margin-left: 2em;
   color: #6a737d;
 }
 
-.markdown ::v-deep th {
+.markdown :deep(th) {
   padding: 5px;
   color: white;
   outline: 1px solid white;
 }
 
-.markdown ::v-deep td {
+.markdown :deep(td) {
   padding: 5px;
   color: white;
   outline: 1px solid white;
