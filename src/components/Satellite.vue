@@ -26,6 +26,7 @@ let camera: THREE.PerspectiveCamera | null;
 let renderer: THREE.WebGLRenderer | null;
 let controls: OrbitControls | null;
 
+const animationSpeed = ref(0.5);
 
 const scaleFactor = 1 / 1000;
 const mounted = ref(false);
@@ -113,6 +114,7 @@ const loadSatelliteData = async (url: String) => {
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.userData.type = 'satellite'; // Mark this object as a satellite
+    mesh.userData.satelliteData = satellite; // Store satellite data
     scene?.add(mesh);
     // Set the mesh position according to satellite data
     mesh.position.copy(satellitePosition(satellite));
@@ -123,6 +125,7 @@ const loadSatelliteData = async (url: String) => {
   }
   isLoading.value = false;
 }
+
 
 const satellitePosition = (satellite: any) => {
   const earthRadius = 6371 * scaleFactor;
@@ -212,14 +215,25 @@ const cleanUp = () => {
 }
 
 // Animate the 3D visualization
+
 const animate = () => {
   if (mounted.value) {
     requestAnimationFrame(animate);
+
+    // Update satellite positions
+    for (const object of scene?.children.filter(object => object.userData.type === 'satellite') ?? []) {
+      if (object instanceof THREE.Mesh) {
+        object.userData.satelliteData.MEAN_ANOMALY += animationSpeed.value;
+        object.position.copy(satellitePosition(object.userData.satelliteData));
+      }
+    }
+
     controls?.update();
     renderer?.render(scene!, camera!);
     labelRenderer.render(scene!, camera!);
   }
 }
+
 const updateRendererSize = () => {
   if (!canvas.value) return;
 
