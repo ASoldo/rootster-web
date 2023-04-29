@@ -132,7 +132,6 @@ const gotolink = (emit_name: any, emit_data: any) => {
   overflow: hidden;
 }
 
-
 /* blinking cursor */
 #cursor::after {
   content: "‏‏‎ ‎‏‏‎ ‎";

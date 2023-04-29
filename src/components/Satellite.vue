@@ -48,6 +48,11 @@ const satelliteGroups = [
   { name: 'IRIDIUM 33 Debris', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=iridium-33-debris&FORMAT=json' },
   { name: 'COSMOS 2251 Debris', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=cosmos-2251-debris&FORMAT=json' },
   { name: '100 brightest', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=visual&FORMAT=json' },
+  { name: 'Search & Rescue', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=sarsat&FORMAT=json' },
+  { name: 'Planet', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=planet&FORMAT=json' },
+  { name: 'GPS Operational', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=json' },
+  { name: 'Weather', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=weather&FORMAT=json' },
+  { name: 'Other', url: 'http://celestrak.org/NORAD/elements/gp.php?GROUP=other&FORMAT=json' },
 ];
 const selectedGroup = ref(satelliteGroups[0].url);
 
@@ -85,7 +90,6 @@ const addAtmosphereLayers = () => {
   }
 }
 
-
 const updateSatelliteData = () => {
   loadSatelliteData(selectedGroup.value);
 }
@@ -94,11 +98,14 @@ const loadSatelliteData = async (url: String) => {
   isLoading.value = true;
   const data = await fetchSatelliteData(url);
 
-  // Clear existing satellites from the scene
-  for (const object of scene?.children ?? []) {
-    if (object.userData.type === 'satellite') {
-      scene?.remove(object);
+  // Clear existing satellites and satellite orbits from the scene
+  const objectsToRemove = scene?.children.filter(object => object.userData.type === 'satellite') ?? [];
+  for (const object of objectsToRemove) {
+    if (object instanceof THREE.Mesh || object instanceof THREE.Line) {
+      object.geometry.dispose(); // Dispose of the object's geometry
+      object.material.dispose(); // Dispose of the object's material
     }
+    scene?.remove(object);
   }
 
   for (const satellite of data) {
