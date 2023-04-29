@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 24px;" class="flex justify-between ">
+  <div style="height: 24px;" class="flex justify-between backdrop-blur-2xl">
     <ul class="flex list-none">
       <li class="">
         <PowerBox p_box_color="whitesmoke" p_start_box_color="transparent" p_end_box_color="dodgerblue" p_icon="󰣇"
