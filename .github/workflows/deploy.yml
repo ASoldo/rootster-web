@@ -32,7 +32,7 @@ jobs:
       - name: Deploy to EC2 instance
         uses: appleboy/scp-action@master
         with:
-          host: 18.185.113.51
+          host: 18.156.80.97
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: dist.zip
