@@ -59,7 +59,7 @@ jobs:
       - name: Restart Caddy v2
         uses: appleboy/ssh-action@master
         with:
-          host: 18.185.113.51
+          host: 18.156.80.97
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
