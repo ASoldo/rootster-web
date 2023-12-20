@@ -1,3 +1,10 @@
+/**
+ * `EnvironmentConfig` - is used for consistent `apiUrl` usage through whole application
+ */
+export type EnvironmentConfig = {
+  apiUrl: string;
+};
+
 export type NavigationItem = {
   label: string;
   path: string;

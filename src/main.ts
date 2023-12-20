@@ -1,12 +1,15 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import "./index.css"
-import App from "./App.vue"
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import "./index.css";
+import App from "./App.vue";
 import router from "./router";
 // import mitt from 'mitt';
 // const emitter = mitt();
 const app = createApp(App);
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 // app.config.globalProperties.emitter = emitter;
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.mount("#app");
