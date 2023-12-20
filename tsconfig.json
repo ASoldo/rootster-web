@@ -9,14 +9,31 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable","ScriptHost", "node"],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable",
+      "ScriptHost"
+    ],
     "skipLibCheck": true,
     "noEmit": true,
     "sourceMap": true,
     "paths": {
-      "@/*": ["./src/*", "./dist/*"]
+      "@/*": [
+        "./src/*",
+        "./dist/*"
+      ]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

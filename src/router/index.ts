@@ -10,25 +10,24 @@ const router = createRouter({
     {
       path: "/",
       name: "desktop",
-      component: WrapperApp
+      component: WrapperApp,
     },
     {
       path: "/chat",
       name: "chat",
-      component: ChatGPT
+      component: ChatGPT,
     },
     {
       path: "/satellite",
       name: "satellite",
-      component: Satellite
+      component: Satellite,
     },
     {
       path: "/chillcraft",
       name: "chillcraft",
-      component: ChillCraft
-    }
-
-  ]
-})
+      component: ChillCraft,
+    },
+  ],
+});
 
 export default router;
