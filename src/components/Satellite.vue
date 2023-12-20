@@ -39,7 +39,6 @@ const atmosphereLayers = [
   { name: 'Thermosphere', altitude: 690000, color: 0x0B3D61 },
 ];
 
-
 const satelliteGroups = [
   { name: 'Active', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json' },
   { name: 'Last 30 days', url: 'https://celestrak.org/NORAD/elements/gp.php?GROUP=last-30-days&FORMAT=json' },
@@ -266,7 +265,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style>
+<style lang="postcss">
 canvas {
   width: 100%;
   border-radius: 15px;

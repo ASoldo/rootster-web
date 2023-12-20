@@ -1,117 +1,147 @@
 <template>
   <div class="pb-8">
     <!-- @mouseover="inspector(app)" -->
-    <Window :id="app.id" @click="inspector(app)" class="fade-in " v-for="app in apps" :key="app.id"
+    <Window :id="app.id" @click="inspector(app)" class="fade-in" v-for="app in apps" :key="app.id"
       :title="app.name.toUpperCase()" @close="closeApp($event)" @reset="reset" :p_id="app.id">
       <pre class="nf text-success" data-prefix=""><code>{{ app.name }}</code></pre>
       <component :is="app.component" v-bind="app.props"></component>
     </Window>
-
   </div>
 </template>
 <script lang="ts" setup>
-import { DefineComponent, markRaw, Ref, ref, defineExpose, defineAsyncComponent } from "vue";
+import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
 import Window from "@/components/Window.vue";
 
 interface NavigationItem {
-  label: string,
-  path: string
+  label: string;
+  path: string;
 }
 
 interface Application {
-  id: number,
-  name: string,
-  component: DefineComponent<any, any, any>,
-  props: Record<string, any>,
-  events?: Record<string, (...args: any[]) => void>,
-  navigation?: NavigationItem[]
+  id: number;
+  name: string;
+  component: any;
+  props: Record<string, any>;
+  events?: Record<string, (...args: any[]) => void>;
+  navigation?: NavigationItem[];
 }
 
 const apps: Ref<Application[]> = ref([]);
 const closeApp = (e: number) => {
   apps.value = apps.value.filter((app) => app.id !== e);
-}
+};
 let lastId = 0;
 const openApp = (e: number) => {
   switch (e) {
-
     case 2:
-      const GithubExplorer = defineAsyncComponent(() => import("@/components/GithubExplorer.vue"))
+      const GithubExplorer = defineAsyncComponent(
+        () => import("@/components/GithubExplorer.vue"),
+      );
       const github_explorer: Application = {
-        id: ++lastId, name: "github-explorer", component: GithubExplorer, props: { username: "ASoldo", repo: "digital-arena-web" }, navigation: [
-          { label: 'Github-Explorer', path: '/' },
-        ]
+        id: ++lastId,
+        name: "github-explorer",
+        component: GithubExplorer,
+        props: { username: "ASoldo", repo: "digital-arena-web" },
+        navigation: [{ label: "Github-Explorer", path: "/" }],
       };
       apps.value.push(markRaw(github_explorer));
       break;
     case 3:
-      const Neofetch = defineAsyncComponent(() => import("@/components/Neofetch.vue"))
+      const Neofetch = defineAsyncComponent(
+        () => import("@/components/Neofetch.vue"),
+      );
       const neofetch: Application = {
-        id: ++lastId, name: "neofetch", component: Neofetch, props: {}, navigation: [
-          { label: 'Neofetch', path: '/' },
-        ]
+        id: ++lastId,
+        name: "neofetch",
+        component: Neofetch,
+        props: {},
+        navigation: [{ label: "Neofetch", path: "/" }],
       };
       apps.value.push(markRaw(neofetch));
       break;
 
     case 5:
-      const Spline = defineAsyncComponent(() => import("@/components/Spline.vue"))
+      const Spline = defineAsyncComponent(
+        () => import("@/components/Spline.vue"),
+      );
       const spline: Application = {
-        id: ++lastId, name: "spline", component: Spline, props: {}, navigation: [
-          { label: 'Spline', path: '/' },
-        ]
+        id: ++lastId,
+        name: "spline",
+        component: Spline,
+        props: {},
+        navigation: [{ label: "Spline", path: "/" }],
       };
       apps.value.push(markRaw(spline));
       break;
 
     case 7:
-      const ChatGPT = defineAsyncComponent(() => import("@/components/ChatGPT.vue"))
+      const ChatGPT = defineAsyncComponent(
+        () => import("@/components/ChatGPT.vue"),
+      );
       const chatgpt: Application = {
-        id: ++lastId, name: "chat-gpt", component: ChatGPT, props: {}, navigation: [
-          { label: 'ChatGPT', path: '/' },
-        ]
+        id: ++lastId,
+        name: "chat-gpt",
+        component: ChatGPT,
+        props: {},
+        navigation: [{ label: "ChatGPT", path: "/" }],
       };
       apps.value.push(markRaw(chatgpt));
       break;
     case 8:
-      const Dalle = defineAsyncComponent(() => import("@/components/Dall-e.vue"))
+      const Dalle = defineAsyncComponent(
+        () => import("@/components/Dall-e.vue"),
+      );
       const dalle: Application = {
-        id: ++lastId, name: "dall-e", component: Dalle, props: {}, navigation: [
-          { label: 'Dall-E', path: '/' },
-        ]
+        id: ++lastId,
+        name: "dall-e",
+        component: Dalle,
+        props: {},
+        navigation: [{ label: "Dall-E", path: "/" }],
       };
       apps.value.push(markRaw(dalle));
       break;
     case 9:
-      const IsoMap = defineAsyncComponent(() => import("@/components/IsoMap.vue"))
+      const IsoMap = defineAsyncComponent(
+        () => import("@/components/IsoMap.vue"),
+      );
       const isoMap: Application = {
-        id: ++lastId, name: "iso-map", component: IsoMap, props: {}, navigation: [
-          { label: 'IsoMap', path: '/' },
-        ]
+        id: ++lastId,
+        name: "iso-map",
+        component: IsoMap,
+        props: {},
+        navigation: [{ label: "IsoMap", path: "/" }],
       };
       apps.value.push(markRaw(isoMap));
       break;
 
     case 10:
-      const ChillCraft = defineAsyncComponent(() => import("@/components/ChillCraft.vue"))
+      const ChillCraft = defineAsyncComponent(
+        () => import("@/components/ChillCraft.vue"),
+      );
       const chillCraft: Application = {
-        id: ++lastId, name: "chill-craft", component: ChillCraft, props: {}, navigation: [
-          { label: 'ChillCraft', path: '/' },
-        ]
+        id: ++lastId,
+        name: "chill-craft",
+        component: ChillCraft,
+        props: {},
+        navigation: [{ label: "ChillCraft", path: "/" }],
       };
       apps.value.push(markRaw(chillCraft));
       break;
     case 11:
-      const Satelite = defineAsyncComponent(() => import("@/components/Satellite.vue"))
+      const Satelite = defineAsyncComponent(
+        () => import("@/components/Satellite.vue"),
+      );
       const satelite: Application = {
-        id: ++lastId, name: "satellite", component: Satelite, props: {}, navigation: [
-          { label: 'Satellite', path: '/' },
-        ]
+        id: ++lastId,
+        name: "satellite",
+        component: Satelite,
+        props: {},
+        navigation: [{ label: "Satellite", path: "/" }],
       };
       apps.value.push(markRaw(satelite));
       break;
   }
-}
+};
 const inspector = (app: Application) => {
   console.log("inspected ", app);
   emit("navigation", app);
@@ -120,18 +150,19 @@ const inspector = (app: Application) => {
       console.log(app.navigation[i].label);
     }
   }
-}
+};
 
 const reset = () => {
-
   emit("navigation", {
-    id: ++lastId, name: "chess", component: null, props: {}, navigation: [
-      { label: '~', path: '/' },
-    ]
+    id: ++lastId,
+    name: "chess",
+    component: null,
+    props: {},
+    navigation: [{ label: "~", path: "/" }],
   });
-}
+};
 
-const emit = defineEmits(['navigation'])
+const emit = defineEmits(["navigation"]);
 
 defineExpose({
   openApp,

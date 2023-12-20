@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 24px;" class="flex justify-between backdrop-blur-2xl">
+  <div style="height: 24px" class="flex justify-between backdrop-blur-2xl">
     <ul class="flex list-none">
       <li class="">
         <PowerBox p_box_color="whitesmoke" p_start_box_color="transparent" p_end_box_color="dodgerblue" p_icon="󰣇"
@@ -57,9 +57,12 @@
         </PowerBox>
       </li>
 
-      <li style="height: 24px;" class="">
+      <li style="height: 24px" class="">
         <PowerBox p_box_color="dodgerblue" p_start_box_color="dodgerblue" p_end_box_color="transparent" p_icon=""
-          :p_text="prop.app?.navigation[0]?.label ? prop.app?.navigation[0]?.label : '~'" :p_href="prop.app?.id" />
+          :p_text="prop.app?.navigation[0]?.label
+              ? prop.app?.navigation[0]?.label
+              : '~'
+            " :p_href="prop.app?.id" />
       </li>
       <!-- <li class=""> -->
       <!--   <PowerBox p_box_color="yellow" p_start_box_color="yellow" p_end_box_color="cyan" p_icon="" -->
@@ -90,17 +93,16 @@
   </div>
 </template>
 
-
 <script lang="ts" setup>
-import { defineEmits, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import PowerBox from "./PowerBox.vue";
-const emit = defineEmits(['openApp'])
+const emit = defineEmits(["openApp"]);
 const prop = defineProps({
   app: {
     type: Object,
     required: false,
-  }
-})
+  },
+});
 
 const timeNow = ref(new Date());
 const hours = ref(timeNow.value.getHours());
@@ -113,16 +115,16 @@ onMounted(() => {
     minutes.value = timeNow.value.getMinutes();
     seconds.value = timeNow.value.getSeconds();
   }, 1000);
-})
+});
 const gotolink = (emit_name: any, emit_data: any) => {
   emit(emit_name, emit_data);
   setTimeout(() => {
     window.scrollTo({
       top: document.body.scrollHeight,
-      behavior: 'smooth'
-    })
-  }, 100)
-}
+      behavior: "smooth",
+    });
+  }, 100);
+};
 </script>
 
 <style lang="postcss">
@@ -142,30 +144,29 @@ const gotolink = (emit_name: any, emit_data: any) => {
 
 @-webkit-keyframes blink {
   0% {
-    background: #222
+    background: #222;
   }
 
   50% {
-    background: lime
+    background: lime;
   }
 
   100% {
-    background: #222
+    background: #222;
   }
 }
 
 @keyframes blink {
   0% {
-    background: #222
+    background: #222;
   }
 
   50% {
-    background: lime
+    background: lime;
   }
 
   100% {
-    background: #222
+    background: #222;
   }
 }
 </style>
-

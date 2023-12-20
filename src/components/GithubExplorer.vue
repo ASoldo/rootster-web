@@ -1,7 +1,9 @@
 <template>
   <ul class="list-none">
-    <li :class="{ 'bg-black': i === selectedProject, 'text-white': i === selectedProject }"
-      v-for="(i, key) in projectNames" :key="key"
+    <li :class="{
+      'bg-black': i === selectedProject,
+      'text-white': i === selectedProject,
+    }" v-for="(i, key) in projectNames" :key="key"
       class="inline-block mr-1 my-1 px-1 text-black bg-blue-500 hover:text-white hover:bg-gray-900 cursor-pointer"
       @click="selectedProject = i">
       /{{ i }}
@@ -9,17 +11,29 @@
   </ul>
   <ul class="text-white">
     <li>
-      <a href="#" @click.prevent="handleItemClick({ name: '.', path: '', type: 'dir', url: '#' })">
-        <span class="hidden md:inline-block">drwxr-xr-x 2 rootster rootster {{ hours }}:{{ minutes }}:{{ seconds }}
+      <a href="#" @click.prevent="
+        handleItemClick({ name: '.', path: '', type: 'dir', url: '#' })
+        ">
+        <span class="hidden md:inline-block">drwxr-xr-x 2 rootster rootster {{ hours }}:{{ minutes }}:{{
+          seconds
+        }}
         </span>
         &nbsp;.
         <span class="nf"></span>
       </a>
     </li>
     <li v-if="path !== ''">
-      <a href="#" @click.prevent="handleItemClick({ name: '..', path: getParentPath(), type: 'dir', url: '#' })">
-        <span class="hidden md:inline-block">drwxr-xr-x 7 rootster rootster {{ hours }}:{{ minutes }}:{{ seconds }}
-        </span>&nbsp;&nbsp;..
+      <a href="#" @click.prevent="
+        handleItemClick({
+          name: '..',
+          path: getParentPath(),
+          type: 'dir',
+          url: '#',
+        })
+        ">
+        <span class="hidden md:inline-block">drwxr-xr-x 7 rootster rootster {{ hours }}:{{ minutes }}:{{
+          seconds
+        }} </span>&nbsp;&nbsp;..
         <span class="nf">󰁭</span>
       </a>
     </li>
@@ -28,8 +42,9 @@
         @click.prevent="handleItemClick(item)">
         <span>
           <span class="hidden md:inline-block" v-if="item.type == 'dir'">drwxr-xr-x 1 rootster rootster</span>
-          <span class="hidden md:inline-block" v-else>-rw-r--r--&nbsp; 1 rootster rootster</span> {{ hours }}:{{
-            minutes }}:{{ seconds }}</span> &nbsp;
+          <span class="hidden md:inline-block" v-else>-rw-r--r--&nbsp; 1 rootster rootster</span>
+          {{ hours }}:{{ minutes }}:{{ seconds }}</span>
+        &nbsp;
         <span class="text-success">{{ item.name }}</span>
         &nbsp;
         <a v-if="item.type == 'dir'" :href="item.url" rel="noopener noreferrer" class="nf"></a>
@@ -37,9 +52,9 @@
       <a v-if="item.type !== 'dir'" :href="item.url" target="_blank" rel="noopener noreferrer" class="nf"></a>
     </li>
   </ul>
-  <div class="card bg-gray-700 my-4" style="width: 100%;">
+  <div class="card bg-gray-700 my-4" style="width: 100%">
     <div class="card-body bg-gray-700 rounded-2xl">
-      <div class="card-title ">
+      <div class="card-title">
         <span class="text-teal-500"> >man </span>
         <span class="text-white">
           {{ selectedProject }}
@@ -52,13 +67,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue';
-import MarkdownIt from 'markdown-it';
+import { ref, onMounted, watch } from "vue";
+import MarkdownIt from "markdown-it";
 
 interface GithubItem {
   name: string;
   path: string;
-  type: 'dir' | 'file';
+  type: "dir" | "file";
   url?: string;
 }
 
@@ -73,7 +88,8 @@ const props = defineProps({
   },
   path: {
     type: String,
-    default: '',
+    default: "",
+    required: false,
   },
 });
 
@@ -84,45 +100,47 @@ const hours = timeNow.getHours();
 const minutes = timeNow.getMinutes();
 const seconds = timeNow.getSeconds();
 const isLoading = ref<boolean>(true);
-const readmeContent = ref<string>('');
+const readmeContent = ref<string>("");
 const md = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
   breaks: true,
 });
-const projectNames = ['go-chi-blog-api', 'digital-arena-web'];
+const projectNames = ["go-chi-blog-api", "digital-arena-web"];
 const selectedProject = ref(projectNames[0]);
 
 const fetchItems = async () => {
-  const response = await fetch(`https://api.github.com/repos/${props.username}/${selectedProject.value}/contents/${path.value}`);
+  const response = await fetch(
+    `https://api.github.com/repos/${props.username}/${selectedProject.value}/contents/${path.value}`,
+  );
   const data = await response.json();
   items.value = data.map((item: any) => ({
     name: item.name,
     path: item.path,
     type: item.type,
-    url: item.type === 'file' ? item.html_url : undefined,
+    url: item.type === "file" ? item.html_url : undefined,
   }));
-}
+};
 
 const handleItemClick = (item: GithubItem) => {
-  if (item.type === 'dir') {
-    if (item.name === '.') {
-      path.value = '';
-    } else if (item.name === '..') {
+  if (item.type === "dir") {
+    if (item.name === ".") {
+      path.value = "";
+    } else if (item.name === "..") {
       path.value = getParentPath();
     } else {
       path.value = item.path;
     }
     fetchItems();
   }
-}
+};
 
 const getParentPath = () => {
-  const pathSegments = path.value.split('/');
+  const pathSegments = path.value.split("/");
   pathSegments.pop();
-  return pathSegments.join('/');
-}
+  return pathSegments.join("/");
+};
 const readMe = async () => {
   const readmeUrl = `https://api.github.com/repos/${props.username}/${selectedProject.value}/contents/README.md`;
   try {
@@ -135,14 +153,13 @@ const readMe = async () => {
   } finally {
     isLoading.value = false;
   }
-}
+};
 
-onMounted(async () => {
-});
+onMounted(async () => { });
 
 watch(selectedProject, () => {
-  path.value = '';
-  readmeContent.value = '';
+  path.value = "";
+  readmeContent.value = "";
   isLoading.value = true;
   fetchItems();
   readMe();
@@ -216,8 +233,8 @@ readMe();
 }
 
 .markdown :deep(code) {
-  font-family: 'Consolas', 'Courier New', monospace;
-  color: #36D399;
+  font-family: "Consolas", "Courier New", monospace;
+  color: #36d399;
   background-color: black;
   border-radius: 5px;
   padding: 2px;
@@ -240,4 +257,3 @@ readMe();
   outline: 1px solid white;
 }
 </style>
-
