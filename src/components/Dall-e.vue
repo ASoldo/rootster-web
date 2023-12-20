@@ -78,7 +78,7 @@ const isSending = ref(false);
 const userImage =
   "https://imgs.search.brave.com/jPwJAFi4P_6r5N0Wbyvx03YXDjsup9iPeU8PoaJ2G7I/rs:fit:400:400:1/g:ce/aHR0cHM6Ly9taXJv/Lm1lZGl1bS5jb20v/bWF4LzgwMC8xKkI4/YzFFRDNRVl95YWE2/UEFXcURnTXcucG5n";
 const botImage =
-  "https://imgs.search.brave.com/vFVAD6WtlbsGS2luLnc3bOuXf3D4VHNh-mzLLaFV4gE/rs:fit:1200:1024:1/g:ce/aHR0cDovL3d3dy5u/ZXdkZXNpZ25maWxl/LmNvbS9wb3N0cGlj/LzIwMDkvMTEvdXNl/ci1pY29uXzI5MTcw/MC5qcGc";
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEnHk8WHYjvoaCnRxzv6jX_Wp_c10p21VMC4B2Mzul9Pt-BEBfNeFMOhpt4aBY5QhkU10&usqp=CAU";
 
 const query = ref("");
 const messages: any = ref([]);
