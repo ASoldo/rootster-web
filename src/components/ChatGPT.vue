@@ -1,4 +1,3 @@
-<!-- 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 -->
 <template>
   <div class="w-full mx-auto py-10 sm:px-1 lg:py-12 lg:px-8">
     <div class="rounded-lg overflow-hidden" v-if="api_key">
