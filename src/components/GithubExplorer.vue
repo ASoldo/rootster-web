@@ -69,13 +69,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
 import MarkdownIt from "markdown-it";
-
-interface GithubItem {
-  name: string;
-  path: string;
-  type: "dir" | "file";
-  url?: string;
-}
+import { GithubItem } from "@/internals/types";
 
 const props = defineProps({
   username: {

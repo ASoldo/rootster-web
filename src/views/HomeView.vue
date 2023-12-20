@@ -11,22 +11,9 @@
 <script lang="ts" setup>
 import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
 import Window from "@/components/Window.vue";
+import { Application } from "@/internals/types";
 
-interface NavigationItem {
-  label: string;
-  path: string;
-}
-
-interface Application {
-  id: number;
-  name: string;
-  component: any;
-  props: Record<string, any>;
-  events?: Record<string, (...args: any[]) => void>;
-  navigation?: NavigationItem[];
-}
-
-const apps: Ref<Application[]> = ref([]);
+const apps: Ref<Array<Application>> = ref<Array<Application>>([]);
 const closeApp = (e: number) => {
   apps.value = apps.value.filter((app) => app.id !== e);
 };

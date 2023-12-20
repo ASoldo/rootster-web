@@ -21,10 +21,16 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-const { title, p_id } = defineProps<{
-  title: string;
-  p_id: number;
-}>();
+const { title, p_id } = defineProps({
+  title: {
+    type: String,
+    default: "App Title",
+  },
+  p_id: {
+    type: Number,
+    default: 0,
+  },
+});
 const isCollapsed = ref(false);
 const emit = defineEmits(["close", "reset"]);
 
