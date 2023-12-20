@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col min-h-screen">
+    <ReloadPrompt />
     <Powerline :app="data" class="fixed top-0 w-full z-50 text-white" @open-app="open($event)" ref="Powerlineref" />
     <HomeView @navigation="dataCheck($event)" class="flex-grow overflow-hidden pt-8 z-40 p-1" ref="Homeref" />
-    <ReloadPrompt />
     <Footer class="fixed bottom-0 left-0 right-0 z-50 bg-gray-900 text-white" />
     <div data-aos="fade-in" class="animated-bg w-full h-full fixed" v-bind="{ style: randomWallpaperStyle }">
       <div class="w-full h-full backdrop-blur-2xl bg-black-80"></div>
