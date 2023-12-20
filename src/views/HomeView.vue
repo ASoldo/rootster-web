@@ -6,11 +6,14 @@
       <pre class="nf text-success" data-prefix=""><code>{{ app.name }}</code></pre>
       <component :is="app.component" v-bind="app.props"></component>
     </Window>
+    <ReloadPrompt />
   </div>
 </template>
 <script lang="ts" setup>
 import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
 import Window from "@/components/Window.vue";
+import ReloadPrompt from "@/components/ReloadPrompt.vue";
+
 import { Application } from "@/internals/types";
 
 const apps: Ref<Array<Application>> = ref<Array<Application>>([]);

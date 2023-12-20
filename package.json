@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/vite.svg"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -26,6 +27,7 @@
     "@types/matter-js": "^0.18.5",
     "@types/three": "^0.150.2",
     "@types/uuid": "^9.0.7",
+    "@vite-pwa/assets-generator": "^0.2.1",
     "@vitejs/plugin-vue": "^4.5.2",
     "autoprefixer": "^10.4.16",
     "markdown-it": "^13.0.2",
