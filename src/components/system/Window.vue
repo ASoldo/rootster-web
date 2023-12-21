@@ -34,7 +34,7 @@ const { title, p_id } = defineProps({
 const isCollapsed = ref(false);
 const emit = defineEmits(["close", "reset"]);
 
-const closeWindow = () => {
+const closeWindow = (): void => {
   // Close the window
   emit("close", p_id);
   emit("reset");

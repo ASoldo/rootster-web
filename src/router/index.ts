@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import WrapperApp from "@/views/WrapperApp.vue";
-import ChatGPT from "@/components/ChatGPT.vue";
-import Satellite from "@/components/Satellite.vue";
-import ChillCraft from "@/components/ChillCraft.vue";
+import ChatGPT from "@/components/applications/ChatGPT.vue";
+import Satellite from "@/components/applications/Satellite.vue";
+import ChillCraft from "@/components/applications/ChillCraft.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

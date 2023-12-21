@@ -9,21 +9,40 @@
 </template>
 <script lang="ts" setup>
 import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
-import Window from "@/components/Window.vue";
+import Window from "@/components/system/Window.vue";
 import { Application } from "@/internals/types";
 
 const apps: Ref<Array<Application>> = ref<Array<Application>>([]);
 
+/**
+ * Close Application by id
+ * @param e id of the application
+ * @returns void
+ * @example
+ * ```ts
+ * closeApp(2)
+ * ```
+ */
 const closeApp = (e: number): void => {
   apps.value = apps.value.filter((app) => app.id !== e);
 };
 
 const lastId = ref(0);
+
+/**
+ * Open Application by id
+ * @param e id of the application
+ * @returns void
+ * @example
+ * ```ts
+ * openApp(2)
+ * ```
+ */
 const openApp = (e: number): void => {
   switch (e) {
     case 2:
       const GithubExplorer = defineAsyncComponent(
-        () => import("@/components/GithubExplorer.vue"),
+        () => import("@/components/applications/GithubExplorer.vue"),
       );
       const github_explorer: Application = {
         id: ++lastId.value,
@@ -36,7 +55,7 @@ const openApp = (e: number): void => {
       break;
     case 3:
       const Neofetch = defineAsyncComponent(
-        () => import("@/components/Neofetch.vue"),
+        () => import("@/components/applications/Neofetch.vue"),
       );
       const neofetch: Application = {
         id: ++lastId.value,
@@ -50,7 +69,7 @@ const openApp = (e: number): void => {
 
     case 5:
       const Spline = defineAsyncComponent(
-        () => import("@/components/Spline.vue"),
+        () => import("@/components/applications/Spline.vue"),
       );
       const spline: Application = {
         id: ++lastId.value,
@@ -64,7 +83,7 @@ const openApp = (e: number): void => {
 
     case 7:
       const ChatGPT = defineAsyncComponent(
-        () => import("@/components/ChatGPT.vue"),
+        () => import("@/components/applications/ChatGPT.vue"),
       );
       const chatgpt: Application = {
         id: ++lastId.value,
@@ -77,7 +96,7 @@ const openApp = (e: number): void => {
       break;
     case 8:
       const Dalle = defineAsyncComponent(
-        () => import("@/components/Dall-e.vue"),
+        () => import("@/components/applications/Dall-e.vue"),
       );
       const dalle: Application = {
         id: ++lastId.value,
@@ -90,7 +109,7 @@ const openApp = (e: number): void => {
       break;
     case 9:
       const IsoMap = defineAsyncComponent(
-        () => import("@/components/IsoMap.vue"),
+        () => import("@/components/applications/IsoMap.vue"),
       );
       const isoMap: Application = {
         id: ++lastId.value,
@@ -104,7 +123,7 @@ const openApp = (e: number): void => {
 
     case 10:
       const ChillCraft = defineAsyncComponent(
-        () => import("@/components/ChillCraft.vue"),
+        () => import("@/components/applications/ChillCraft.vue"),
       );
       const chillCraft: Application = {
         id: ++lastId.value,
@@ -117,7 +136,7 @@ const openApp = (e: number): void => {
       break;
     case 11:
       const Satelite = defineAsyncComponent(
-        () => import("@/components/Satellite.vue"),
+        () => import("@/components/applications/Satellite.vue"),
       );
       const satelite: Application = {
         id: ++lastId.value,
@@ -130,7 +149,13 @@ const openApp = (e: number): void => {
       break;
   }
 };
-const inspector = (app: Application) => {
+
+/**
+ * Open Application by id
+ * @param e id of the application
+ * @returns void
+ */
+const inspector = (app: Application): void => {
   console.log("inspected ", app);
   emit("navigation", app);
   if (app.navigation) {
@@ -140,7 +165,15 @@ const inspector = (app: Application) => {
   }
 };
 
-const reset = () => {
+/**
+ * Reset the navigation
+ * @returns void
+ * @example
+ * ```ts
+ * reset()
+ * ```
+ */
+const reset = (): void => {
   emit("navigation", {
     id: ++lastId.value,
     name: "chess",

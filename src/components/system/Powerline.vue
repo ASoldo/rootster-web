@@ -64,27 +64,8 @@
               : '~'
             " :p_href="prop.app?.id" />
       </li>
-      <!-- <li class=""> -->
-      <!--   <PowerBox p_box_color="yellow" p_start_box_color="yellow" p_end_box_color="cyan" p_icon="" -->
-      <!--     p_text="Go Chi Blog API" /> -->
-      <!-- </li> -->
-      <!-- <li class=""> -->
-      <!--   <PowerBox p_box_color="cyan" p_start_box_color="cyan" p_end_box_color="transparent" p_icon="" p_text="main" /> -->
-      <!-- </li> -->
-
-      <!-- <li> -->
-      <!--   <span id="cursor" class="p-2 shrinkable"> -->
-      <!--     <u> cd Documents/Go Chi Blog API</u> -->
-      <!--   </span> -->
-      <!-- </li> -->
     </ul>
     <ul class="flex list-none">
-      <!-- <li class=""> -->
-      <!--   <PowerBox p_box_color="cyan" p_start_box_color="transparent" p_end_box_color="cyan" p_icon="" p_text="" /> -->
-      <!-- </li> -->
-      <!-- <li class=""> -->
-      <!--   <PowerBox p_box_color="limegreen" p_start_box_color="cyan" p_end_box_color="limegreen" p_icon="" p_text="Go" /> -->
-      <!-- </li> -->
       <li class="">
         <PowerBox p_box_color="whitesmoke" p_start_box_color="transparent" p_end_box_color="transparent" p_icon=""
           :p_text="`${hours}:${minutes}:${seconds}`" />

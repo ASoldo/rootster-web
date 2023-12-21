@@ -16,7 +16,16 @@ import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 
-async function close() {
+/**
+ * # Close the toast
+ * @returns {Promise<void>}
+ * @example
+ * ```ts
+ * const { close } = useReloadPrompt();
+ * ```
+ *
+ */
+async function close(): Promise<void> {
   offlineReady.value = false;
   needRefresh.value = false;
 }

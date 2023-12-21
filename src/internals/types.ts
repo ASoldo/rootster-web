@@ -10,6 +10,14 @@ export type NavigationItem = {
   path: string;
 };
 
+/**
+ * List of all opened applications
+ * @type {Ref<Array<Application>>}
+ * @example
+ * ```ts
+ * const apps: Ref<Array<Application>> = ref<Array<Application>>([])
+ * ```
+ */
 export type Application = {
   id: number;
   name: string;

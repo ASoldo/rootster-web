@@ -15,10 +15,10 @@
 import { ref, computed } from "vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Powerline from "@/components/Powerline.vue";
+import Powerline from "@/components/system/Powerline.vue";
 import HomeView from "@/views/HomeView.vue";
-import ReloadPrompt from "@/components/ReloadPrompt.vue";
-import Footer from "@/components/Footer.vue";
+import ReloadPrompt from "@/components/system/ReloadPrompt.vue";
+import Footer from "@/components/system/Footer.vue";
 import { useCounterStore } from "@/stores/counter";
 
 // access the `store` variable anywhere in the component ✨
