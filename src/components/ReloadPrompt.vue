@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import { useRegisterSW } from "virtual:pwa-register/vue";
-
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
-
-async function close() {
-  offlineReady.value = false;
-  needRefresh.value = false;
-}
-</script>
-
 <template>
   <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
     <div class="message">
@@ -21,6 +10,17 @@ async function close() {
     <button @click="close">Close</button>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { useRegisterSW } from "virtual:pwa-register/vue";
+
+const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+
+async function close() {
+  offlineReady.value = false;
+  needRefresh.value = false;
+}
+</script>
 
 <style>
 .pwa-toast {
