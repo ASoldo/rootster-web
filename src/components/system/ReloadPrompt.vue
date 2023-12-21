@@ -31,7 +31,7 @@ async function close(): Promise<void> {
 }
 </script>
 
-<style>
+<style scoped>
 .pwa-toast {
   position: absolute;
   right: 0;

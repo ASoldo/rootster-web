@@ -97,7 +97,13 @@ onMounted(() => {
     seconds.value = timeNow.value.getSeconds();
   }, 1000);
 });
-const gotolink = (emit_name: any, emit_data: any) => {
+/**
+ * # gotolink
+ * @param emit_name
+ * @param emit_data
+ * return void
+ */
+const gotolink = (emit_name: any, emit_data: any): void => {
   emit(emit_name, emit_data);
   setTimeout(() => {
     window.scrollTo({
@@ -108,7 +114,7 @@ const gotolink = (emit_name: any, emit_data: any) => {
 };
 </script>
 
-<style lang="postcss">
+<style scoped>
 .shrinkable {
   white-space: nowrap;
   text-overflow: ellipsis;

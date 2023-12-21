@@ -28,9 +28,9 @@
   ---------------------- 
   OS:<span class="text-white">Arch Linux x86_64</span> 
   Host:<span class="text-white">B560M DS3H V2</span> 
-  Kernel:<span class="text-white">6.2.13-arch1-1</span> 
+  Kernel:<span class="text-white">6.6.6-arch1-1</span> 
   Uptime:<span class="text-white">0 days, 1 mins</span> 
-  Packages:<span class="text-white">733 (pacman)</span> 
+  Packages:<span class="text-white">1013 (pacman)</span> 
   Shell:<span class="text-white">zsh 5.9</span> 
   Resolution:<span class="text-white">2560x1440, 2560x1440</span> 
   WM:<span class="text-white">i3</span> 
