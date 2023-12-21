@@ -1,6 +1,5 @@
 <template>
   <div class="pb-8">
-    <!-- @mouseover="inspector(app)" -->
     <Window :id="app.id" @click="inspector(app)" class="fade-in" v-for="app in apps" :key="app.id"
       :title="app.name.toUpperCase()" @close="closeApp($event)" @reset="reset" :p_id="app.id">
       <pre class="nf text-success" data-prefix=""><code>{{ app.name }}</code></pre>
@@ -11,22 +10,23 @@
 <script lang="ts" setup>
 import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
 import Window from "@/components/Window.vue";
-
 import { Application } from "@/internals/types";
 
 const apps: Ref<Array<Application>> = ref<Array<Application>>([]);
-const closeApp = (e: number) => {
+
+const closeApp = (e: number): void => {
   apps.value = apps.value.filter((app) => app.id !== e);
 };
-let lastId = 0;
-const openApp = (e: number) => {
+
+const lastId = ref(0);
+const openApp = (e: number): void => {
   switch (e) {
     case 2:
       const GithubExplorer = defineAsyncComponent(
         () => import("@/components/GithubExplorer.vue"),
       );
       const github_explorer: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "github-explorer",
         component: GithubExplorer,
         props: { username: "ASoldo", repo: "digital-arena-web" },
@@ -39,7 +39,7 @@ const openApp = (e: number) => {
         () => import("@/components/Neofetch.vue"),
       );
       const neofetch: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "neofetch",
         component: Neofetch,
         props: {},
@@ -53,7 +53,7 @@ const openApp = (e: number) => {
         () => import("@/components/Spline.vue"),
       );
       const spline: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "spline",
         component: Spline,
         props: {},
@@ -67,7 +67,7 @@ const openApp = (e: number) => {
         () => import("@/components/ChatGPT.vue"),
       );
       const chatgpt: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "chat-gpt",
         component: ChatGPT,
         props: {},
@@ -80,7 +80,7 @@ const openApp = (e: number) => {
         () => import("@/components/Dall-e.vue"),
       );
       const dalle: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "dall-e",
         component: Dalle,
         props: {},
@@ -93,7 +93,7 @@ const openApp = (e: number) => {
         () => import("@/components/IsoMap.vue"),
       );
       const isoMap: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "iso-map",
         component: IsoMap,
         props: {},
@@ -107,7 +107,7 @@ const openApp = (e: number) => {
         () => import("@/components/ChillCraft.vue"),
       );
       const chillCraft: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "chill-craft",
         component: ChillCraft,
         props: {},
@@ -120,7 +120,7 @@ const openApp = (e: number) => {
         () => import("@/components/Satellite.vue"),
       );
       const satelite: Application = {
-        id: ++lastId,
+        id: ++lastId.value,
         name: "satellite",
         component: Satelite,
         props: {},
@@ -142,7 +142,7 @@ const inspector = (app: Application) => {
 
 const reset = () => {
   emit("navigation", {
-    id: ++lastId,
+    id: ++lastId.value,
     name: "chess",
     component: null,
     props: {},
