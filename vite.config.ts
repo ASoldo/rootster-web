@@ -11,7 +11,7 @@ export default ({ mode }) => {
     plugins: [
       vue(),
       VitePWA({
-        registerType: "autoUpdate",
+        registerType: "prompt",
         strategies: "injectManifest",
         srcDir: "src",
         filename: "sw.ts",
