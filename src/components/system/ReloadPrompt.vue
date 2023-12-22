@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/// <reference types="vite-plugin-pwa/vue" />
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
@@ -17,7 +18,9 @@ async function close() {
         New content available, click on reload button to update.
       </span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">Reload</button>
+    <button v-if="needRefresh" @click="updateServiceWorker(true)">
+      Reload
+    </button>
     <button @click="close">Close</button>
   </div>
 </template>
