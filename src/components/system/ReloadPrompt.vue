@@ -1,12 +1,9 @@
 <template>
-  <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
+  <div v-if="needRefresh" class="pwa-toast" role="alert">
     <div class="message">
-      <span v-if="offlineReady"> App ready to work offline </span>
-      <span v-else>
-        New content available, click on reload button to update.
-      </span>
+      New content available, click on reload button to update.
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker()">Reload</button>
+    <button @click="updateServiceWorker()">Reload</button>
     <button @click="close">Close</button>
   </div>
 </template>
@@ -14,26 +11,16 @@
 <script lang="ts" setup>
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
+const { needRefresh, updateServiceWorker } = useRegisterSW();
 
-/**
- * # Close the toast
- * @returns {Promise<void>}
- * @example
- * ```ts
- * const { close } = useReloadPrompt();
- * ```
- *
- */
-async function close(): Promise<void> {
-  offlineReady.value = false;
+function close() {
   needRefresh.value = false;
 }
 </script>
 
 <style scoped>
 .pwa-toast {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   margin: 16px;

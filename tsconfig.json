@@ -17,7 +17,8 @@
       "ESNext",
       "DOM",
       "DOM.Iterable",
-      "ScriptHost"
+      "ScriptHost",
+      "WebWorker"
     ],
     "skipLibCheck": true,
     "noEmit": true,
