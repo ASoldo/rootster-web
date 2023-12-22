@@ -1,7 +1,7 @@
 <template>
   <div v-if="needRefresh" class="pwa-toast" role="alert">
     <div class="message">
-      New content available, click on reload button to update!
+      New content available, click on reload button to update.
     </div>
     <button @click="reloadApp">Reload</button>
     <button @click="close">Close</button>
