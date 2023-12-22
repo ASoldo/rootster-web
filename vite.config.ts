@@ -38,6 +38,14 @@ export default ({ mode }) => {
             },
           ],
         },
+        workbox: {
+          cleanupOutdatedCaches: true,
+          skipWaiting: true,
+          clientsClaim: true,
+          navigateFallback: "/",
+          globPatterns: ["**/*.{js,css,html,png,jpg,jpeg,svg,json,ico}"],
+          globIgnores: ["**/node_modules/**/*", "sw.ts", "workbox-*.js"],
+        },
       }),
     ],
     resolve: {
