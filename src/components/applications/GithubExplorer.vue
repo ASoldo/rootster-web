@@ -45,16 +45,16 @@
           <span class="hidden md:inline-block" v-else>-rw-r--r--&nbsp; 1 rootster rootster</span>
           {{ hours }}:{{ minutes }}:{{ seconds }}</span>
         &nbsp;
-        <span class="text-success">{{ item.name }}</span>
+        <span class="text-green-500">{{ item.name }}</span>
         &nbsp;
         <a v-if="item.type == 'dir'" :href="item.url" rel="noopener noreferrer" class="nf"></a>
       </a>
       <a v-if="item.type !== 'dir'" :href="item.url" target="_blank" rel="noopener noreferrer" class="nf"></a>
     </li>
   </ul>
-  <div class="card bg-gray-700 my-4" style="width: 100%">
-    <div class="card-body bg-gray-700 rounded-2xl">
-      <div class="card-title">
+  <div class="rounded-2xl bg-gray-700 my-4" style="width: 100%">
+    <div class="p-3 bg-gray-700 rounded-2xl">
+      <div class="p-2">
         <span class="text-teal-500"> >man </span>
         <span class="text-white">
           {{ selectedProject }}

@@ -16,7 +16,6 @@
     "@vueuse/components": "^10.7.0",
     "@vueuse/core": "^10.7.0",
     "aos": "^2.3.4",
-    "daisyui": "^2.52.0",
     "easystarjs": "^0.4.4",
     "mitt": "^3.0.1",
     "openai": "^4.24.0",

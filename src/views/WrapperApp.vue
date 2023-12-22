@@ -35,7 +35,6 @@ const dataCheck = (nav_data: Object) => {
   console.log("Nav data:", nav_data);
   data.value = nav_data;
 };
-// 'https://i.giphy.com/media/hugQmENCWTyPM3yG5D/giphy.webp',
 const wallpapers = ref([
   "https://media4.giphy.com/media/PLJeLzh6gfL2LhUIW0/giphy.gif?cid=ecf05e477sugdxwyz6o7a7kf4gr88b2pvimqubqkkpzl069j&ep=v1_gifs_related&rid=giphy.gif&ct=g",
   "https://media1.giphy.com/media/dJD4vdBsnt3WyGcYOd/giphy.gif?cid=ecf05e47fh0ekb09klnl0jvklumtk8aqtpmqtl123jfdrtep&ep=v1_gifs_related&rid=giphy.gif&ct=g",

@@ -9,4 +9,4 @@ import config from "@/config";
 console.log("Config url", config.apiUrl);
 </script>
 
-<style lang="postcss" scoped></style>
+<style scoped></style>

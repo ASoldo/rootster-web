@@ -2,7 +2,7 @@
   <div class="pb-8">
     <Window :id="app.id" @click="inspector(app)" class="fade-in" v-for="app in apps" :key="app.id"
       :title="app.name.toUpperCase()" @close="closeApp($event)" @reset="reset" :p_id="app.id">
-      <pre class="nf text-success" data-prefix=""><code>{{ app.name }}</code></pre>
+      <pre class="nf text-green-500" data-prefix=""><code>{{ app.name }}</code></pre>
       <component :is="app.component" v-bind="app.props"></component>
     </Window>
   </div>

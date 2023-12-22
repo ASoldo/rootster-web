@@ -1,45 +1,51 @@
 <template>
-  <div class="dropdown dropdown-bottom">
-    <div class="flex powerbox cursor-pointer">
-      <div class="powerbox-end"></div>
-      <a tabindex="0" :href="`#${p_href}`">
-        <div class="middlepart flex items-center text-white sm:w-10 lg:w-full">
-          <span class="nf px-1 text-black sm:w-30">{{ p_icon }}</span>
-          <span class="shrinkable text-black sm:w-30 hover:text-cyan-900"> {{ p_text }}</span>
-        </div>
-      </a>
-      <div class="powerbox-start"></div>
-      <slot />
-    </div>
+  <div class="flex powerbox cursor-pointer">
+    <div class="powerbox-end"></div>
+    <a tabindex="0" :href="`#${p_href}`">
+      <div class="middlepart flex items-center text-white sm:w-10 lg:w-full">
+        <span class="nf px-1 text-black sm:w-30">{{ p_icon }}</span>
+        <span class="shrinkable text-black sm:w-30 hover:text-cyan-900">
+          {{ p_text }}</span>
+      </div>
+    </a>
+    <div class="powerbox-start"></div>
+    <slot />
   </div>
 </template>
 <script lang="ts" setup>
-const { p_box_color, p_start_box_color, p_end_box_color, p_icon, p_text, p_href } = defineProps({
+const {
+  p_box_color,
+  p_start_box_color,
+  p_end_box_color,
+  p_icon,
+  p_text,
+  p_href,
+} = defineProps({
   p_box_color: {
     type: String,
-    required: true
+    required: true,
   },
   p_start_box_color: {
     type: String,
-    required: true
+    required: true,
   },
   p_end_box_color: {
     type: String,
-    required: true
+    required: true,
   },
   p_icon: {
     type: String,
-    required: true
+    required: true,
   },
   p_text: {
     type: String,
-    required: true
+    required: true,
   },
   p_href: {
     type: Number,
-    required: false
-  }
-})
+    required: false,
+  },
+});
 </script>
 
 <style scoped>

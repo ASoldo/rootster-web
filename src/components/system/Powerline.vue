@@ -1,59 +1,20 @@
 <template>
   <div style="height: 24px" class="flex justify-between backdrop-blur-2xl">
-    <ul class="flex list-none">
-      <li class="">
-        <PowerBox p_box_color="whitesmoke" p_start_box_color="transparent" p_end_box_color="dodgerblue" p_icon="󰣇"
-          p_text="Arch">
-          <ul tabindex="0" class="dropdown-content menu w-56 bg-black-80">
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 3)" class="p-1">
-                <span class="nf"></span>
-                Neofetch
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 2)" class="p-1">
-                <span class="nf"></span>
-                Github Explorer
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 7)" class="p-1">
-                <span class="nf">󰘑</span>
-                ChatGPT
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 8)" class="p-1">
-                <span class="nf">󰔥</span>
-                Dall-E
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 5)" class="p-1">
-                <span class="nf"></span>
-                Spline
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 9)" class="p-1">
-                <span class="nf">󱇚</span>
-                IsoMap
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 10)" class="p-1">
-                <span class="nf">󰳤</span>
-                ChillCraft
-              </a>
-            </li>
-            <li class="hover:bg-primary">
-              <a @click.prevent="gotolink('openApp', 11)" class="p-1">
-                <span class="nf">󰑱</span>
-                Satellite
-              </a>
-            </li>
-          </ul>
+    <ul class="flex">
+      <li>
+        <PowerBox @click="toggleDialog" p_box_color="whitesmoke" p_start_box_color="transparent"
+          p_end_box_color="dodgerblue" p_icon="󰣇" p_text="Arch">
+          <dialog :open="showDialog" class="absolute left-0 top-0 mt-6 ml-3 rounded-lg bg-transparent">
+            <ul class="bg-white shadow-xl flex flex-col pl-0 ml-0 justify-start">
+              <li v-for="item in dropdownItems" :key="item.id" @click.prevent="gotolink(item.action, item.id)"
+                class="hover:bg-[#1e90ff] hover:text-white">
+                <a class="p-1">
+                  <span class="nf">{{ item.icon }}</span>
+                  {{ item.label }}
+                </a>
+              </li>
+            </ul>
+          </dialog>
         </PowerBox>
       </li>
 
@@ -75,8 +36,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { Ref, ref, onMounted } from "vue";
 import PowerBox from "./PowerBox.vue";
+
+const dialog = ref<HTMLDialogElement>();
+function toggleDialog() {
+  showDialog.value = !showDialog.value;
+  if (showDialog.value) dialog.value?.showModal();
+  else dialog.value?.close();
+}
+const showDialog: Ref<boolean> = ref(false);
+const dropdownItems = ref([
+  { id: 3, label: "Neofetch", icon: "", action: "openApp" },
+  { id: 2, label: "Github Explorer", icon: "", action: "openApp" },
+  { id: 5, label: "Spline", icon: "", action: "openApp" },
+  { id: 7, label: "ChatGPT", icon: "󰘑", action: "openApp" },
+  { id: 8, label: "Dall-E", icon: "󰔥", action: "openApp" },
+  { id: 9, label: "IsoMap", icon: "󱇚", action: "openApp" },
+  { id: 10, label: "ChillCraft", icon: "󰳤", action: "openApp" },
+  { id: 11, label: "Satellite", icon: "󰑱", action: "openApp" },
+]);
 const emit = defineEmits(["openApp"]);
 const prop = defineProps({
   app: {
@@ -86,15 +65,18 @@ const prop = defineProps({
 });
 
 const timeNow = ref(new Date());
-const hours = ref(timeNow.value.getHours());
-const minutes = ref(timeNow.value.getMinutes());
-const seconds = ref(timeNow.value.getSeconds());
+const padWithZero = (number: number) => String(number).padStart(2, "0");
+
+const hours = ref(padWithZero(timeNow.value.getHours()));
+const minutes = ref(padWithZero(timeNow.value.getMinutes()));
+const seconds = ref(padWithZero(timeNow.value.getSeconds()));
+
 onMounted(() => {
   setInterval(() => {
     timeNow.value = new Date();
-    hours.value = timeNow.value.getHours();
-    minutes.value = timeNow.value.getMinutes();
-    seconds.value = timeNow.value.getSeconds();
+    hours.value = padWithZero(timeNow.value.getHours());
+    minutes.value = padWithZero(timeNow.value.getMinutes());
+    seconds.value = padWithZero(timeNow.value.getSeconds());
   }, 1000);
 });
 /**
