@@ -4,10 +4,10 @@
       <li>
         <PowerBox @click="toggleDialog" p_box_color="whitesmoke" p_start_box_color="transparent"
           p_end_box_color="dodgerblue" p_icon="󰣇" p_text="Arch">
-          <dialog :open="showDialog" class="absolute left-0 top-0 mt-6 ml-3 rounded-lg bg-transparent">
+          <dialog :open="showDialog" class="absolute left-0 top-0 mt-6 ml-3 rounded-lg bg-transparent z-50">
             <ul class="bg-white shadow-xl flex flex-col pl-0 ml-0 justify-start">
               <li v-for="item in dropdownItems" :key="item.id" @click.prevent="gotolink(item.action, item.id)"
-                class="hover:bg-[#1e90ff] hover:text-white">
+                class="hover:bg-primary hover:text-white">
                 <a class="p-1">
                   <span class="nf">{{ item.icon }}</span>
                   {{ item.label }}
