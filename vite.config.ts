@@ -24,7 +24,7 @@ export default ({ mode }) => {
           name: "Rootster",
           short_name: "Rootster",
           description: "Rootster | Software Development",
-          theme_color: "#ffffff",
+          theme_color: "#1e90ff",
           icons: [
             {
               src: "pwa-192x192.png",
