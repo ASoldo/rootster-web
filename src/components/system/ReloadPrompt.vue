@@ -3,7 +3,7 @@
     <div class="message">
       New content available, click on reload button to update!
     </div>
-    <button @click="updateServiceWorker()">Reload</button>
+    <button @click="reloadApp">Reload</button>
     <button @click="close">Close</button>
   </div>
 </template>
@@ -12,7 +12,9 @@
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { needRefresh, updateServiceWorker } = useRegisterSW();
-
+function reloadApp() {
+  updateServiceWorker();
+}
 function close() {
   needRefresh.value = false;
 }
