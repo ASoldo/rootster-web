@@ -10,7 +10,7 @@ interface NotificationData {
 declare const self: ServiceWorkerGlobalScopeWithEvents;
 
 cleanupOutdatedCaches();
-precacheAndRoute(self.__WB_MANIFEST || []);
+precacheAndRoute(self.__WB_MANIFEST);
 clientsClaim();
 
 console.log("Custom Service Worker");
