@@ -12,7 +12,7 @@ export default ({ mode }) => {
       vue(),
       VitePWA({
         registerType: "prompt",
-        strategies: "injectManifest",
+        strategies: "generateSW",
         srcDir: "src",
         filename: "sw.ts",
         includeAssets: [
