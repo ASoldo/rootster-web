@@ -4,6 +4,12 @@ import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 
+async function reloadPage() {
+  console.log("reloading");
+  await updateServiceWorker(true);
+  console.log("after-reloading");
+}
+
 async function close() {
   offlineReady.value = false;
   needRefresh.value = false;
@@ -18,9 +24,7 @@ async function close() {
         New content available, click on reload button to update!
       </span>
     </div>
-    <button v-if="needRefresh" @click="updateServiceWorker(true)">
-      Reload
-    </button>
+    <button v-if="needRefresh" @click="reloadPage">Reload</button>
     <button @click="close">Close</button>
   </div>
 </template>
