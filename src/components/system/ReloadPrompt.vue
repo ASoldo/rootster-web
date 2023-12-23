@@ -16,9 +16,9 @@ async function close() {
 <template>
   <div v-if="offlineReady || needRefresh" class="pwa-toast" role="alert">
     <div class="message">
-      <span v-if="offlineReady"> App ready to work offline </span>
+      <span v-if="offlineReady"> 🚀 App ready to work offline </span>
       <span v-else>
-        🚀 New content available! Click on reload button to update! 💫
+        💫 New content available! Click on reload button to update! 💫
       </span>
     </div>
     <button v-if="needRefresh" @click="reloadPage">Reload</button>
