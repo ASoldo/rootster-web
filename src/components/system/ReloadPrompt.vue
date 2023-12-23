@@ -18,7 +18,7 @@ async function close() {
     <div class="message">
       <span v-if="offlineReady"> App ready to work offline </span>
       <span v-else>
-        🚀 New content available, click on reload button to update! 💫
+        🚀 New content available! Click on reload button to update! 💫
       </span>
     </div>
     <button v-if="needRefresh" @click="reloadPage">Reload</button>
