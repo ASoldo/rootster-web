@@ -15,6 +15,7 @@ clientsClaim();
 
 console.log("Custom Service Worker");
 
+// Skip Waiting Listener for reloading the page when a new version is available
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
