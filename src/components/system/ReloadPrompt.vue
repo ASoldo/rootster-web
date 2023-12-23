@@ -21,8 +21,10 @@ async function close() {
         💫 New content available! Click on reload button to update! 💫
       </span>
     </div>
-    <button v-if="needRefresh" @click="reloadPage">Reload</button>
-    <button @click="close">Close</button>
+    <button class="bg-green-500 text-white" v-if="needRefresh" @click="reloadPage">
+      Reload
+    </button>
+    <button class="text-red-500" @click="close">Close</button>
   </div>
 </template>
 
