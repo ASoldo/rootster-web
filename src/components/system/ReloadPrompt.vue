@@ -22,9 +22,12 @@ async function close() {
       </span>
     </div>
     <button class="bg-green-500 text-white" v-if="needRefresh" @click="reloadPage">
-      Reload
+      💫 Reload
     </button>
-    <button class="text-red-500" @click="close">Close</button>
+    <button class="text-red-500" @click="close">
+      <span class="text-red-500"></span>
+      Close
+    </button>
   </div>
 </template>
 
