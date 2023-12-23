@@ -15,6 +15,10 @@ clientsClaim();
 
 console.log("Custom Service Worker");
 
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
+
 // Push Notification Listener
 self.addEventListener("push", (event: PushEvent) => {
   console.log("Sansoldino:push", event);
