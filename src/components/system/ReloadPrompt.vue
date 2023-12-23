@@ -1,13 +1,10 @@
 <script setup lang="ts">
-/// <reference types="vite-plugin-pwa/vue" />
 import { useRegisterSW } from "virtual:pwa-register/vue";
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW();
 
 async function reloadPage() {
-  console.log("reloading");
   await updateServiceWorker(true);
-  console.log("after-reloading");
 }
 
 async function close() {
