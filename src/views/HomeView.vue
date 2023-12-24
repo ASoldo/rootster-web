@@ -147,6 +147,19 @@ const openApp = (e: number): void => {
       };
       apps.value.push(markRaw(satelite));
       break;
+    case 12:
+      const BevyGame = defineAsyncComponent(
+        () => import("@/components/applications/BevyGame.vue"),
+      );
+      const bevy_game: Application = {
+        id: ++lastId.value,
+        name: "bevy-game",
+        component: BevyGame,
+        props: {},
+        navigation: [{ label: "BevyGame", path: "/" }],
+      };
+      apps.value.push(markRaw(bevy_game));
+      break;
   }
 };
 

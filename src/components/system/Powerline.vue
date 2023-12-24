@@ -55,6 +55,7 @@ const dropdownItems = ref([
   { id: 9, label: "IsoMap", icon: "󱇚", action: "openApp" },
   { id: 10, label: "ChillCraft", icon: "󰳤", action: "openApp" },
   { id: 11, label: "Satellite", icon: "󰑱", action: "openApp" },
+  { id: 12, label: "BevyGame", icon: "🎮", action: "openApp" },
 ]);
 const emit = defineEmits(["openApp"]);
 const prop = defineProps({
