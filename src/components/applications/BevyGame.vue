@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onBeforeUnmount } from "vue";
-import init from "@/../public/bevy-game/bevy-game.js"; // Adjust the import path as needed
+import init from "@/bevy-game/bevy-game.js"; // Adjust the import path as needed
 
 onMounted(async () => {
   try {
