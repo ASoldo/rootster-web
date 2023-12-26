@@ -11,6 +11,7 @@
 import { markRaw, Ref, ref, defineAsyncComponent } from "vue";
 import Window from "@/components/system/Window.vue";
 import { Application } from "@/internals/types";
+import config from "@/config";
 
 const apps: Ref<Array<Application>> = ref<Array<Application>>([]);
 
@@ -156,7 +157,7 @@ const openApp = (e: number): void => {
         name: "bevy-engine",
         component: BevyPreview,
         props: {
-          url: "http://localhost:5173/bevy",
+          url: config.apiUrl + "/bevy",
         },
         navigation: [{ label: "BevyPreview", path: "/" }],
       };

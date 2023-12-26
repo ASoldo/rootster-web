@@ -2,7 +2,7 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -15,11 +15,11 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build:prod
 
       - name: Zip dist folder
         run: zip -r dist.zip dist
-          
+
       - name: Upload dist to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -28,7 +28,7 @@ jobs:
           AWS_S3_BUCKET: rootstergg-deploy-bucket
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          
+
       - name: Deploy to EC2 instance
         uses: appleboy/scp-action@master
         with:
@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: dist.zip
           target: ~/dist.zip
-        
+
         env:
           AWS_S3_BUCKET: rootstergg-deploy-bucket
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -55,7 +55,7 @@ jobs:
             fi
             sudo unzip -o ~/dist.zip/dist.zip -d /var/www/html/rootsterxyz
             sudo rm -rf ~/dist.zip
-          
+
       - name: Restart Caddy v2
         uses: appleboy/ssh-action@master
         with:
