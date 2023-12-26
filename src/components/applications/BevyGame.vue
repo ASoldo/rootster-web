@@ -1,17 +1,25 @@
 <template>
-  <div class="w-full h-[100dvh]">
+  <div class="w-full h-[100vh]">
+    <div v-if="state.loading" class="progress-bar w-full h-full bg-red-500">
+      <div class="text-white text-center flex flex-col justify-center align-middle h-full">
+        <span class="animate-spin">loading</span>
+      </div>
+    </div>
     <canvas ref="canvasRef" :id="canvas_id"></canvas>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
 import init, { initialize_game, set_exit_flag } from "@/bevy-game/bevy-game.js";
 
 const canvas_id = ref<string>(
   "bevy-canvas" + Math.random().toString(36).substring(7),
 );
 const canvasRef = ref<HTMLCanvasElement>();
+const state = reactive({
+  loading: true,
+});
 
 const init_game = async () => {
   try {
@@ -29,6 +37,7 @@ const init_game = async () => {
       throw error;
     }
   }
+  state.loading = false;
   console.log("Finished Loading BevyGame");
 };
 // await init_game();
