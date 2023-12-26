@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <iframe
-      :src="url"
-      class="w-[100%] h-[50vh] rounded-2xl overflow-hidden"
-      frameborder="0"
-    ></iframe>
+  <div class="rounded-2xl overflow-hidden">
+    <iframe :src="url" class="w-[100%] h-[50vh]" frameborder="0"></iframe>
   </div>
 </template>
 

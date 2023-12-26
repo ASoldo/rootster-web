@@ -157,7 +157,7 @@ const openApp = (e: number): void => {
         name: "bevy-engine",
         component: BevyPreview,
         props: {
-          url: config.apiUrl + "/bevy",
+          url: "../src/bevy-game/bevy-game.html",
         },
         navigation: [{ label: "BevyPreview", path: "/" }],
       };
