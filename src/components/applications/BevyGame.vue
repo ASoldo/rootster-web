@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100dvw] h-[100dvh]">
+  <div class="w-full h-[100dvh]">
     <canvas ref="canvasRef" :id="canvas_id"></canvas>
   </div>
 </template>
