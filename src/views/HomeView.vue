@@ -149,17 +149,15 @@ const openApp = (e: number): void => {
       apps.value.push(markRaw(satelite));
       break;
     case 12:
-      const BevyPreview = defineAsyncComponent(
-        () => import("@/components/applications/BevyPreview.vue"),
+      const BevyGame = defineAsyncComponent(
+        () => import("@/components/applications/BevyGame.vue"),
       );
       const bevy_preview: Application = {
         id: ++lastId.value,
-        name: "bevy-engine",
-        component: BevyPreview,
-        props: {
-          url: "../src/bevy-game/bevy-game.html",
-        },
-        navigation: [{ label: "BevyPreview", path: "/" }],
+        name: "bevy-game",
+        component: BevyGame,
+        props: {},
+        navigation: [{ label: "BevyGame", path: "/" }],
       };
       apps.value.push(markRaw(bevy_preview));
       break;
