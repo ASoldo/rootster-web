@@ -148,17 +148,19 @@ const openApp = (e: number): void => {
       apps.value.push(markRaw(satelite));
       break;
     case 12:
-      const BevyGame = defineAsyncComponent(
-        () => import("@/components/applications/BevyGame.vue"),
+      const BevyPreview = defineAsyncComponent(
+        () => import("@/components/applications/BevyPreview.vue"),
       );
-      const bevy_game: Application = {
+      const bevy_preview: Application = {
         id: ++lastId.value,
-        name: "bevy-game",
-        component: BevyGame,
-        props: {},
-        navigation: [{ label: "BevyGame", path: "/" }],
+        name: "bevy-engine",
+        component: BevyPreview,
+        props: {
+          url: "http://localhost:5173/bevy",
+        },
+        navigation: [{ label: "BevyPreview", path: "/" }],
       };
-      apps.value.push(markRaw(bevy_game));
+      apps.value.push(markRaw(bevy_preview));
       break;
   }
 };
@@ -188,8 +190,8 @@ const inspector = (app: Application): void => {
  */
 const reset = (): void => {
   emit("navigation", {
-    id: ++lastId.value,
-    name: "chess",
+    id: 0,
+    name: "",
     component: null,
     props: {},
     navigation: [{ label: "~", path: "/" }],
