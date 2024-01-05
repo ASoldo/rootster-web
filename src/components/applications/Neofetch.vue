@@ -1,5 +1,5 @@
 <template>
-  <div class="nf text-[#1e90ff] flex flex-col md:flex-row">
+  <div class="nf text-[#2aa198] flex flex-col md:flex-row">
     <pre class="w-full md:w-1/2 text-xs text-left md:text-right">
                   <code class="p-0 m-0">
                     -`                    
